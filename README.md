@@ -171,4 +171,6 @@ Or open the folder in Android Studio and run the `app` configuration.
 
 ## License
 
-No license has been chosen yet, so all rights are reserved by the author.
+Copyright © 2026 Arthur Gomes da Silva. All rights reserved.
+
+The code is public so you can read it and learn from it. It isn't licensed for reuse or redistribution. If you'd like to use part of it, open an issue and ask.
