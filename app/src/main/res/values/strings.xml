@@ -1,0 +1,204 @@
+<resources>
+    <string name="app_name" translatable="false">Quitter</string>
+    <!-- The language these strings are in. Dates and month names are formatted in it, so they match the text. -->
+    <string name="app_language">en</string>
+
+    <string name="action_back">Back</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_next">Next</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="welcome_title">One counter.\nThat\'s the whole idea.</string>
+    <string name="welcome_body">Quitter counts the time since you last did the thing — and turns it into money kept and hours back. No account. Your data stays on the device.</string>
+    <string name="welcome_benefit_savings">Cost and time you\'d normally spend become live savings</string>
+    <string name="welcome_benefit_trophies">Trophies at every hour and day milestone</string>
+    <string name="welcome_benefit_ads">Free forever, funded by ads — never on relapse screens</string>
+    <string name="welcome_benefit_free">Free, with no ads and nothing to sign up for</string>
+    <string name="welcome_add_habit">Add my first habit</string>
+
+    <string name="kind_smoking">Smoking</string>
+    <string name="kind_smoking_default_name">Cigarettes</string>
+    <string name="kind_alcohol">Alcohol</string>
+    <string name="kind_sugar">Sugar</string>
+    <string name="kind_vaping">Vaping</string>
+    <string name="kind_social_media">Social media</string>
+    <string name="kind_gambling">Gambling</string>
+
+    <string name="new_habit_title">New habit</string>
+    <string name="new_habit_kind_question">What are you quitting?</string>
+    <string name="new_habit_name">Name</string>
+    <string name="new_habit_name_required">Give it a name</string>
+    <string name="new_habit_last_time">Last time you did it</string>
+    <string name="new_habit_just_now">Just now</string>
+    <string name="new_habit_pick_date">Pick date and time</string>
+    <string name="new_habit_cost_per_day">Cost / day</string>
+    <string name="new_habit_time_per_day">Time / day</string>
+    <string name="new_habit_minutes_too_high">Max 1440</string>
+    <string name="unit_minutes">min</string>
+    <string name="new_habit_projection_both">At this rate you\'ll have kept %1$s and %2$s in a year.</string>
+    <string name="new_habit_projection_money">At this rate you\'ll have kept %1$s in a year.</string>
+    <string name="new_habit_projection_time">At this rate you\'ll have %1$s back in a year.</string>
+    <string name="new_habit_start">Start the counter</string>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+
+    <string name="counter_running_title">Your counter is running</string>
+    <string name="counter_running_body">From now on every minute counts for something. The first trophy lands at 24 hours.</string>
+    <string name="counter_go_to_habits">Go to my habits</string>
+    <string name="counter_ads_note">Quitter is free and ad-supported. Ads never appear during urge or slip flows.</string>
+
+    <string name="free_for_smoking">Smoke-free for</string>
+    <string name="free_for_alcohol">Alcohol-free for</string>
+    <string name="free_for_sugar">Sugar-free for</string>
+    <string name="free_for_vaping">Vape-free for</string>
+    <string name="free_for_social_media">Scroll-free for</string>
+    <string name="free_for_gambling">Bet-free for</string>
+
+    <!-- Home -->
+    <string name="home_title_today">Today</string>
+    <string name="home_add_habit">Add habit</string>
+    <string name="home_urge">I have an urge</string>
+    <string name="home_log_slip">Log slip</string>
+    <string name="home_personal_best_current">Personal best — you are on it</string>
+    <string name="home_personal_best">Personal best: %s</string>
+    <string name="home_money_kept">money kept</string>
+    <string name="home_time_back">time back</string>
+    <string name="home_hours_short">%d h</string>
+    <string name="home_next_trophy">Next trophy — %s</string>
+    <plurals name="days_to_go">
+        <item quantity="one">%d day to go</item>
+        <item quantity="other">%d days to go</item>
+    </plurals>
+    <plurals name="hours_to_go">
+        <item quantity="one">%d hour to go</item>
+        <item quantity="other">%d hours to go</item>
+    </plurals>
+    <plurals name="minutes_to_go">
+        <item quantity="one">%d minute to go</item>
+        <item quantity="other">%d minutes to go</item>
+    </plurals>
+    <string name="home_checkin_title">Evening check-in</string>
+    <string name="home_checkin_subtitle">A minute, once a day</string>
+
+    <string name="tab_habits">Habits</string>
+    <string name="tab_rewards">Rewards</string>
+    <string name="tab_trophies">Trophies</string>
+    <string name="tab_insights">Insights</string>
+    <string name="title_trophy_room">Trophy room</string>
+    <string name="title_settings">Settings</string>
+    <string name="coming_soon">Coming soon</string>
+
+    <!-- Log slip -->
+    <string name="slip_title">Log a slip</string>
+    <string name="slip_body">Nothing is deleted. Your longest streak and total savings stay — the counter starts again from now.</string>
+    <string name="slip_trigger_label">What led to it? (optional)</string>
+    <string name="slip_trigger_stress">Stress</string>
+    <string name="slip_trigger_social">Social</string>
+    <string name="slip_trigger_boredom">Boredom</string>
+    <string name="slip_trigger_alcohol">Alcohol</string>
+    <string name="slip_trigger_no_reason">No reason</string>
+    <string name="slip_cancel">Cancel</string>
+    <string name="slip_reset">Reset counter</string>
+    <string name="slip_no_ads">No ads are shown anywhere in this flow.</string>
+    <string name="slip_logged_short">Counter reset.</string>
+    <string name="slip_logged">Counter reset. Longest streak of %s is kept.</string>
+
+    <!-- Urge timer -->
+    <string name="urge_label">Ride it out</string>
+    <string name="urge_close">Close</string>
+    <string name="urge_of_total">of 5:00</string>
+    <string name="urge_time_left">%1$s %2$s left</string>
+    <string name="urge_coach_breathe">Breathe in for four. Hold for four. Out for six.</string>
+    <string name="urge_coach_peak">This is the peak. It falls from here — stay with it.</string>
+    <string name="urge_coach_fading">Almost through. Notice it already fading.</string>
+    <string name="urge_coach_done">Five minutes. The urge passed — you rode it out.</string>
+    <string name="urge_got_through">I got through it</string>
+    <plurals name="urge_outlasted">
+        <item quantity="one">Urge logged and outlasted. That is %d this month.</item>
+        <item quantity="other">Urge logged and outlasted. That is %d this month.</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <string name="urge_your_reason">— one of your reasons</string>
+
+    <!-- Habit detail -->
+    <string name="detail_tracking_since">Tracking since %s</string>
+    <string name="detail_tab_stats">Stats</string>
+    <string name="detail_tab_calendar">Calendar</string>
+    <string name="detail_tab_reasons">Reasons</string>
+    <string name="detail_money_kept">Money kept</string>
+    <string name="detail_time_back">Time back</string>
+    <string name="detail_cost_per_day">%s / day</string>
+    <string name="detail_minutes_per_day">%d min / day</string>
+    <string name="detail_no_stats">This habit has no daily cost or time, so there is nothing to add up yet.</string>
+    <string name="detail_savings_title">Savings over time</string>
+    <plurals name="detail_months">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+    <string name="detail_previous_month">Previous month</string>
+    <string name="detail_next_month">Next month</string>
+    <string name="detail_clean">Clean</string>
+    <string name="detail_slip">Slip</string>
+    <string name="detail_day_untracked">not tracked</string>
+    <string name="detail_day_future">not yet</string>
+    <string name="detail_reasons_empty">Why are you quitting? Write it in your own words. You will see it when an urge hits.</string>
+    <string name="detail_add_reason">Add a reason</string>
+    <string name="detail_edit_reason">Edit reason</string>
+    <string name="detail_reason_hint">e.g. I want to keep up with my kids</string>
+    <string name="detail_urge_timer">Urge timer</string>
+    <string name="detail_more">More options</string>
+    <string name="detail_delete">Delete habit</string>
+    <string name="detail_delete_title">Delete %s?</string>
+    <string name="detail_delete_body">Its counter, slips, urges and reasons are deleted for good. This can\'t be undone.</string>
+    <string name="edit_habit_title">Edit habit</string>
+
+    <string name="home_empty_title">No habits yet</string>
+    <string name="home_empty_body">Add the habit you want to quit and your counter starts.</string>
+
+    <!-- Settings -->
+    <string name="settings_data_section">Your data</string>
+    <string name="settings_export">Export as CSV</string>
+    <string name="settings_export_detail">Habits, slips, urges and reasons, for any spreadsheet</string>
+    <string name="settings_exported">Exported.</string>
+    <string name="settings_export_failed">Couldn\'t export. Please try again.</string>
+    <string name="settings_delete_all">Delete all data</string>
+    <string name="settings_delete_all_detail">Every habit and its history</string>
+    <string name="settings_delete_all_title">Delete everything?</string>
+    <string name="settings_delete_all_body">All habits, slips, urges and reasons are deleted from this phone. This can\'t be undone. Export first if you want a copy.</string>
+    <string name="settings_delete_all_confirm">Delete everything</string>
+    <string name="settings_privacy_section">Privacy</string>
+    <string name="settings_privacy">Stays on this phone</string>
+    <string name="settings_privacy_detail">No account, no ads, no tracking. Nothing you enter is sent to us. Your phone\'s own backup may include it.</string>
+    <string name="settings_version">Version %s</string>
+
+    <!-- Trophy notifications -->
+    <plurals name="years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+    <string name="milestone_body">Another trophy for %s. Keep going.</string>
+    <string name="milestone_channel">Trophies</string>
+    <string name="milestone_channel_detail">A notification at each milestone, never at night</string>
+    <string name="counter_notify">Notify me at each trophy</string>
+    <string name="counter_notify_on">You\'ll get a notification at each trophy.</string>
+    <string name="notifications_blocked">Notifications are off for Quitter.</string>
+    <string name="notifications_open_settings">Open settings</string>
+    <string name="settings_notifications_section">Notifications</string>
+    <string name="settings_milestones">Trophy notifications</string>
+    <string name="settings_milestones_detail">One at each milestone, never at night</string>
+</resources>

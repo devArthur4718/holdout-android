@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_language">pt</string>
+
+    <string name="action_back">Voltar</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_next">Avançar</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancelar</string>
+
+    <string name="welcome_title">Um contador.\nÉ só essa a ideia.</string>
+    <string name="welcome_body">O Quitter conta o tempo desde a última vez que você fez aquilo — e transforma isso em dinheiro guardado e horas de volta. Sem conta. Seus dados ficam no aparelho.</string>
+    <string name="welcome_benefit_savings">O custo e o tempo que você gastaria viram economia ao vivo</string>
+    <string name="welcome_benefit_trophies">Troféus a cada marco de horas e dias</string>
+    <string name="welcome_benefit_ads">Grátis para sempre, mantido por anúncios — nunca nas telas de recaída</string>
+    <string name="welcome_benefit_free">Grátis, sem anúncios e sem cadastro</string>
+    <string name="welcome_add_habit">Adicionar meu primeiro hábito</string>
+
+    <string name="kind_smoking">Cigarro</string>
+    <string name="kind_smoking_default_name">Cigarros</string>
+    <string name="kind_alcohol">Álcool</string>
+    <string name="kind_sugar">Açúcar</string>
+    <string name="kind_vaping">Vape</string>
+    <string name="kind_social_media">Redes sociais</string>
+    <string name="kind_gambling">Apostas</string>
+
+    <string name="new_habit_title">Novo hábito</string>
+    <string name="new_habit_kind_question">Do que você quer se livrar?</string>
+    <string name="new_habit_name">Nome</string>
+    <string name="new_habit_name_required">Dê um nome</string>
+    <string name="new_habit_last_time">Última vez que você fez</string>
+    <string name="new_habit_just_now">Agora mesmo</string>
+    <string name="new_habit_pick_date">Escolher data e hora</string>
+    <string name="new_habit_cost_per_day">Custo / dia</string>
+    <string name="new_habit_time_per_day">Tempo / dia</string>
+    <string name="new_habit_minutes_too_high">Máx. 1440</string>
+    <string name="unit_minutes">min</string>
+    <string name="new_habit_projection_both">Nesse ritmo, em um ano você terá guardado %1$s e ganhado %2$s de volta.</string>
+    <string name="new_habit_projection_money">Nesse ritmo, em um ano você terá guardado %1$s.</string>
+    <string name="new_habit_projection_time">Nesse ritmo, em um ano você terá %1$s de volta.</string>
+    <string name="new_habit_start">Iniciar o contador</string>
+    <plurals name="days">
+        <item quantity="one">%d dia</item>
+        <item quantity="many">%d dias</item>
+        <item quantity="other">%d dias</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="many">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="many">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+
+    <string name="counter_running_title">Seu contador está rodando</string>
+    <string name="counter_running_body">A partir de agora, cada minuto conta. O primeiro troféu chega em 24 horas.</string>
+    <string name="counter_go_to_habits">Ir para meus hábitos</string>
+    <string name="counter_ads_note">O Quitter é grátis e mantido por anúncios. Nunca há anúncios durante vontades ou recaídas.</string>
+
+    <string name="free_for_smoking">Sem fumar há</string>
+    <string name="free_for_alcohol">Sem álcool há</string>
+    <string name="free_for_sugar">Sem açúcar há</string>
+    <string name="free_for_vaping">Sem vape há</string>
+    <string name="free_for_social_media">Sem rolar o feed há</string>
+    <string name="free_for_gambling">Sem apostar há</string>
+
+    <string name="home_title_today">Hoje</string>
+    <string name="home_add_habit">Adicionar hábito</string>
+    <string name="home_urge">Estou com vontade</string>
+    <string name="home_log_slip">Registrar recaída</string>
+    <string name="home_personal_best_current">Recorde pessoal — você está nele</string>
+    <string name="home_personal_best">Recorde pessoal: %s</string>
+    <string name="home_money_kept">dinheiro guardado</string>
+    <string name="home_time_back">tempo de volta</string>
+    <string name="home_hours_short">%d h</string>
+    <string name="home_next_trophy">Próximo troféu — %s</string>
+    <plurals name="days_to_go">
+        <item quantity="one">falta %d dia</item>
+        <item quantity="many">faltam %d dias</item>
+        <item quantity="other">faltam %d dias</item>
+    </plurals>
+    <plurals name="hours_to_go">
+        <item quantity="one">falta %d hora</item>
+        <item quantity="many">faltam %d horas</item>
+        <item quantity="other">faltam %d horas</item>
+    </plurals>
+    <plurals name="minutes_to_go">
+        <item quantity="one">falta %d minuto</item>
+        <item quantity="many">faltam %d minutos</item>
+        <item quantity="other">faltam %d minutos</item>
+    </plurals>
+    <string name="home_checkin_title">Check-in da noite</string>
+    <string name="home_checkin_subtitle">Um minuto, uma vez por dia</string>
+
+    <string name="tab_habits">Hábitos</string>
+    <string name="tab_rewards">Recompensas</string>
+    <string name="tab_trophies">Troféus</string>
+    <string name="tab_insights">Análises</string>
+    <string name="title_trophy_room">Sala de troféus</string>
+    <string name="title_settings">Configurações</string>
+    <string name="coming_soon">Em breve</string>
+
+    <string name="slip_title">Registrar uma recaída</string>
+    <string name="slip_body">Nada é apagado. Sua maior sequência e o total economizado continuam — o contador recomeça a partir de agora.</string>
+    <string name="slip_trigger_label">O que levou a isso? (opcional)</string>
+    <string name="slip_trigger_stress">Estresse</string>
+    <string name="slip_trigger_social">Social</string>
+    <string name="slip_trigger_boredom">Tédio</string>
+    <string name="slip_trigger_alcohol">Álcool</string>
+    <string name="slip_trigger_no_reason">Sem motivo</string>
+    <string name="slip_cancel">Cancelar</string>
+    <string name="slip_reset">Zerar contador</string>
+    <string name="slip_no_ads">Nenhum anúncio aparece neste fluxo.</string>
+    <string name="slip_logged_short">Contador zerado.</string>
+    <string name="slip_logged">Contador zerado. Sua maior sequência, de %s, continua salva.</string>
+
+    <string name="urge_label">Aguente firme</string>
+    <string name="urge_close">Fechar</string>
+    <string name="urge_of_total">de 5:00</string>
+    <string name="urge_time_left">faltam %1$s e %2$s</string>
+    <string name="urge_coach_breathe">Inspire contando até quatro. Segure por quatro. Solte em seis.</string>
+    <string name="urge_coach_peak">Este é o pico. Daqui para frente só diminui — fique com ele.</string>
+    <string name="urge_coach_fading">Quase lá. Repare como já está passando.</string>
+    <string name="urge_coach_done">Cinco minutos. A vontade passou — você aguentou firme.</string>
+    <string name="urge_got_through">Eu consegui</string>
+    <plurals name="urge_outlasted">
+        <item quantity="one">Vontade registrada e superada. Foi a %dª este mês.</item>
+        <item quantity="many">Vontade registrada e superada. Já são %d este mês.</item>
+        <item quantity="other">Vontade registrada e superada. Já são %d este mês.</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="one">%d segundo</item>
+        <item quantity="many">%d segundos</item>
+        <item quantity="other">%d segundos</item>
+    </plurals>
+    <string name="urge_your_reason">— um dos seus motivos</string>
+
+    <string name="detail_tracking_since">Acompanhando desde %s</string>
+    <string name="detail_tab_stats">Números</string>
+    <string name="detail_tab_calendar">Calendário</string>
+    <string name="detail_tab_reasons">Motivos</string>
+    <string name="detail_money_kept">Dinheiro guardado</string>
+    <string name="detail_time_back">Tempo de volta</string>
+    <string name="detail_cost_per_day">%s / dia</string>
+    <string name="detail_minutes_per_day">%d min / dia</string>
+    <string name="detail_no_stats">Este hábito não tem custo nem tempo por dia, então ainda não há nada para somar.</string>
+    <string name="detail_savings_title">Economia ao longo do tempo</string>
+    <plurals name="detail_months">
+        <item quantity="one">%d mês</item>
+        <item quantity="many">%d meses</item>
+        <item quantity="other">%d meses</item>
+    </plurals>
+    <string name="detail_previous_month">Mês anterior</string>
+    <string name="detail_next_month">Próximo mês</string>
+    <string name="detail_clean">Limpo</string>
+    <string name="detail_slip">Recaída</string>
+    <string name="detail_day_untracked">não acompanhado</string>
+    <string name="detail_day_future">ainda não</string>
+    <string name="detail_reasons_empty">Por que você quer parar? Escreva com suas palavras. Você vai ver isso quando a vontade bater.</string>
+    <string name="detail_add_reason">Adicionar um motivo</string>
+    <string name="detail_edit_reason">Editar motivo</string>
+    <string name="detail_reason_hint">ex.: quero ter fôlego para brincar com meus filhos</string>
+    <string name="detail_urge_timer">Timer da vontade</string>
+    <string name="detail_more">Mais opções</string>
+    <string name="detail_delete">Excluir hábito</string>
+    <string name="detail_delete_title">Excluir %s?</string>
+    <string name="detail_delete_body">O contador, as recaídas, as vontades e os motivos serão apagados de vez. Não dá para desfazer.</string>
+    <string name="edit_habit_title">Editar hábito</string>
+
+    <string name="home_empty_title">Nenhum hábito ainda</string>
+    <string name="home_empty_body">Adicione o hábito que você quer largar e o contador começa.</string>
+
+    <string name="settings_data_section">Seus dados</string>
+    <string name="settings_export">Exportar como CSV</string>
+    <string name="settings_export_detail">Hábitos, recaídas, vontades e motivos, para qualquer planilha</string>
+    <string name="settings_exported">Exportado.</string>
+    <string name="settings_export_failed">Não foi possível exportar. Tente de novo.</string>
+    <string name="settings_delete_all">Apagar todos os dados</string>
+    <string name="settings_delete_all_detail">Todos os hábitos e o histórico</string>
+    <string name="settings_delete_all_title">Apagar tudo?</string>
+    <string name="settings_delete_all_body">Todos os hábitos, recaídas, vontades e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia.</string>
+    <string name="settings_delete_all_confirm">Apagar tudo</string>
+    <string name="settings_privacy_section">Privacidade</string>
+    <string name="settings_privacy">Fica neste celular</string>
+    <string name="settings_privacy_detail">Sem conta, sem anúncios, sem rastreamento. Nada do que você digita é enviado para nós. O backup do seu celular pode incluir esses dados.</string>
+    <string name="settings_version">Versão %s</string>
+
+    <!-- Trophy notifications -->
+    <plurals name="years">
+        <item quantity="one">%d ano</item>
+        <item quantity="many">%d anos</item>
+        <item quantity="other">%d anos</item>
+    </plurals>
+    <string name="milestone_body">Mais um troféu para %s. Continue assim.</string>
+    <string name="milestone_channel">Troféus</string>
+    <string name="milestone_channel_detail">Uma notificação a cada marco, nunca à noite</string>
+    <string name="counter_notify">Avise-me a cada troféu</string>
+    <string name="counter_notify_on">Você vai receber uma notificação a cada troféu.</string>
+    <string name="notifications_blocked">As notificações do Quitter estão desativadas.</string>
+    <string name="notifications_open_settings">Abrir configurações</string>
+    <string name="settings_notifications_section">Notificações</string>
+    <string name="settings_milestones">Notificações de troféus</string>
+    <string name="settings_milestones_detail">Uma a cada marco, nunca à noite</string>
+</resources>
