@@ -20,13 +20,11 @@ class FakeHabitRepository : HabitRepository {
   /** habitId, at, trigger */
   val slips = MutableStateFlow<List<Triple<Long, Instant, SlipTrigger?>>>(emptyList())
   /** habitId, startedAt, endedAt */
-  val urges = mutableListOf<Triple<Long, Instant, Instant>>()
   /** habitId to reason */
   val reasons = MutableStateFlow<List<Pair<Long, Reason>>>(emptyList())
   private var nextReasonId = 1L
   val goals = MutableStateFlow<List<PersonalGoal>>(emptyList())
   private var nextGoalId = 1L
-  private val urgeStarts = MutableStateFlow<List<Pair<Long, Instant>>>(emptyList())
   /** When true, every write throws, as a full disk or a broken database would. */
   var failWrites = false
 
@@ -56,15 +54,6 @@ class FakeHabitRepository : HabitRepository {
     return updated
   }
 
-  override suspend fun logUrge(habitId: Long, startedAt: Instant, endedAt: Instant) {
-    write()
-    urges += Triple(habitId, startedAt, endedAt)
-    urgeStarts.value += habitId to startedAt
-  }
-
-  override suspend fun countUrges(habitId: Long, since: Instant): Int =
-    urges.count { it.first == habitId && it.third >= since }
-
   override fun observeSlips(habitId: Long): Flow<List<Slip>> =
     slips.map { list -> list.filter { it.first == habitId }.map { Slip(it.second, it.third) } }
 
@@ -88,9 +77,6 @@ class FakeHabitRepository : HabitRepository {
     write()
     reasons.value = reasons.value.filterNot { it.second.id == id }
   }
-
-  override fun observeUrges(habitId: Long): Flow<List<Instant>> =
-    urgeStarts.map { list -> list.filter { it.first == habitId }.map { it.second }.sorted() }
 
   override fun observeAllPersonalGoals(): Flow<List<PersonalGoal>> = goals.map { list -> list.sortedBy { it.days } }
 
@@ -121,8 +107,6 @@ class FakeHabitRepository : HabitRepository {
     habits.value = habits.value.filterNot { it.id == id }
     slips.value = slips.value.filterNot { it.first == id }
     reasons.value = reasons.value.filterNot { it.first == id }
-    urges.removeAll { it.first == id }
-    urgeStarts.value = urgeStarts.value.filterNot { it.first == id }
     goals.value = goals.value.filterNot { it.habitId == id }
   }
 
@@ -131,8 +115,6 @@ class FakeHabitRepository : HabitRepository {
     habits.value = emptyList()
     slips.value = emptyList()
     reasons.value = emptyList()
-    urges.clear()
-    urgeStarts.value = emptyList()
     goals.value = emptyList()
   }
 

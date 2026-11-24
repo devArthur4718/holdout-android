@@ -2,7 +2,6 @@ package app.quitter.model
 
 import java.time.Instant
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -82,44 +81,5 @@ class TrophiesTest {
     assertEquals(listOf(1, 7, 30, 60, 90, 180, 365, 545, 730, 1095, 1460), days)
     // A new habit: up to 1 year.
     assertEquals(365, trophies(long.streaks(emptyList(), start), emptyList()).last().days)
-  }
-
-  @Test fun historyIsNewestFirstWithTheBestMarked() {
-    val history = streakHistory(habit.streaks(slips, now))
-    assertEquals(listOf(7 * day, 2 * day, 10 * day), history.map { it.streak.seconds })
-    assertEquals(listOf(false, false, true), history.map { it.isBest })
-    assertTrue(history.first().streak.isCurrent)
-  }
-
-  @Test fun onATieTheMostRecentStreakIsBest() {
-    val h = Habit(1, HabitKind.Smoking, "x", at("2026-01-11"), null, null, bestSeconds = 5 * day, bankedSeconds = 10 * day)
-    val history = streakHistory(h.streaks(listOf(at("2026-01-06"), at("2026-01-11")), at("2026-01-12")))
-    // Streaks: 5 days, 5 days, current 1 day. The newer 5-day one is best.
-    assertEquals(listOf(false, true, false), history.map { it.isBest })
-  }
-
-  @Test fun pastStreaksUnderAMinuteAreLeftOut() {
-    val t = at("2026-01-01")
-    fun streak(from: Long, to: Long?, now: Long = 0) =
-      Streak(t.plusSeconds(from), to?.let { t.plusSeconds(it) }, (to ?: now) - from)
-
-    // 10 days, then 59 s between two slips (left out), then the current streak at 0 minutes (kept).
-    val history = streakHistory(listOf(streak(0, 10 * day), streak(10 * day, 10 * day + 59), streak(10 * day + 59, null, 10 * day + 59)))
-    assertEquals(listOf(0L, 10 * day), history.map { it.streak.seconds })
-    assertEquals(listOf(false, true), history.map { it.isBest })
-
-    // Only a sub-minute past streak: the current one alone, not marked best, so the "show up here" line shows.
-    val only = streakHistory(listOf(streak(0, 30), streak(30, null, 30)))
-    assertEquals(1, only.size)
-    assertTrue(only.single().streak.isCurrent)
-    assertFalse(only.single().isBest)
-
-    // Exactly a minute stays.
-    assertEquals(2, streakHistory(listOf(streak(0, 60), streak(60, null, 65))).size)
-  }
-
-  @Test fun aSingleStreakIsNotMarkedBest() {
-    val fresh = Habit(1, HabitKind.Smoking, "x", at("2026-01-01"), null, null)
-    assertEquals(listOf(false), streakHistory(fresh.streaks(emptyList(), now)).map { it.isBest })
   }
 }

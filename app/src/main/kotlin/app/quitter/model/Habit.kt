@@ -49,7 +49,7 @@ val Habit.trackingSince: Instant get() = lastDoneAt.minusSeconds(bankedSeconds)
 /** A logged slip. */
 data class Slip(val at: Instant, val trigger: SlipTrigger?)
 
-/** Why the user is quitting, in their own words. Shown on the habit and during urges. */
+/** Why the user is quitting, in their own words. Shown on the habit. */
 data class Reason(val id: Long, val text: String)
 
 /** Longest reason text accepted. */

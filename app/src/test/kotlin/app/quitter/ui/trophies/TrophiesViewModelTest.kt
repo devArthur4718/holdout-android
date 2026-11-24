@@ -57,7 +57,7 @@ class TrophiesViewModelTest {
     assertEquals("Alcohol", vm.ready.selected.name)
     vm.select(first)
     assertEquals("Cigarettes", vm.ready.selected.name)
-    // Another screen with the same selection (e.g. Insights) starts on the same habit.
+    // Another screen with the same selection starts on the same habit.
     assertEquals(first, selection.selectedId.value)
   }
 

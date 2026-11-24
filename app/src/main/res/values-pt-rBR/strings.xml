@@ -60,7 +60,7 @@
     <string name="counter_past_title">Você já está a caminho</string>
     <string name="counter_past_body">O tempo desde que você parou já conta. Seu próximo troféu chega ao completar %s.</string>
     <string name="counter_go_to_habits">Ir para meus hábitos</string>
-    <string name="counter_ads_note">O Quitter é grátis e mantido por anúncios. Nunca há anúncios durante vontades ou recaídas.</string>
+    <string name="counter_ads_note">O Quitter é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída.</string>
 
     <string name="free_for_smoking">Sem fumar há</string>
     <string name="free_for_alcohol">Sem álcool há</string>
@@ -71,8 +71,7 @@
 
     <string name="home_title_today">Hoje</string>
     <string name="home_add_habit">Adicionar hábito</string>
-    <string name="home_urge">Estou com vontade</string>
-    <string name="home_log_slip">Registrar recaída</string>
+    <string name="home_reset_counter">Zerar contador</string>
     <string name="home_personal_best_current">Recorde pessoal — você está nele</string>
     <string name="home_personal_best">Recorde pessoal: %s</string>
     <string name="home_money_kept">dinheiro guardado</string>
@@ -98,7 +97,6 @@
     <string name="home_checkin_subtitle">Um minuto, uma vez por dia</string>
 
     <string name="tab_trophies">Troféus</string>
-    <string name="tab_insights">Análises</string>
     <string name="title_settings">Configurações</string>
     <string name="coming_soon">Em breve</string>
 
@@ -116,26 +114,11 @@
     <string name="slip_logged_short">Contador zerado.</string>
     <string name="slip_logged">Contador zerado. Sua maior sequência, de %s, continua salva.</string>
 
-    <string name="urge_label">Aguente firme</string>
-    <string name="urge_close">Fechar</string>
-    <string name="urge_of_total">de 5:00</string>
-    <string name="urge_time_left">faltam %1$s e %2$s</string>
-    <string name="urge_coach_breathe">Inspire contando até quatro. Segure por quatro. Solte em seis.</string>
-    <string name="urge_coach_peak">Este é o pico. Daqui para frente só diminui — fique com ele.</string>
-    <string name="urge_coach_fading">Quase lá. Repare como já está passando.</string>
-    <string name="urge_coach_done">Cinco minutos. A vontade passou — você aguentou firme.</string>
-    <string name="urge_got_through">Eu consegui</string>
-    <plurals name="urge_outlasted">
-        <item quantity="one">Vontade registrada e superada. Foi a %dª este mês.</item>
-        <item quantity="many">Vontade registrada e superada. Já são %d este mês.</item>
-        <item quantity="other">Vontade registrada e superada. Já são %d este mês.</item>
-    </plurals>
     <plurals name="seconds">
         <item quantity="one">%d segundo</item>
         <item quantity="many">%d segundos</item>
         <item quantity="other">%d segundos</item>
     </plurals>
-    <string name="urge_your_reason">— um dos seus motivos</string>
 
     <string name="detail_tracking_since">Acompanhando desde %s</string>
     <string name="detail_tab_stats">Números</string>
@@ -158,16 +141,15 @@
     <string name="detail_slip">Recaída</string>
     <string name="detail_day_untracked">não acompanhado</string>
     <string name="detail_day_future">ainda não</string>
-    <string name="detail_reasons_empty">Por que você quer parar? Escreva com suas palavras. Você vai ver isso quando a vontade bater.</string>
+    <string name="detail_reasons_empty">Por que você quer parar? Escreva com suas palavras.</string>
     <string name="detail_add_reason">Adicionar um motivo</string>
     <string name="detail_delete_reason">Apagar motivo</string>
     <string name="detail_edit_reason">Editar motivo</string>
     <string name="detail_reason_hint">ex.: quero ter fôlego para brincar com meus filhos</string>
-    <string name="detail_urge_timer">Timer da vontade</string>
     <string name="detail_more">Mais opções</string>
     <string name="detail_delete">Apagar hábito</string>
     <string name="detail_delete_title">Apagar %s?</string>
-    <string name="detail_delete_body">O contador, as recaídas, as vontades e os motivos serão apagados de vez. Não dá para desfazer.</string>
+    <string name="detail_delete_body">O contador, as recaídas e os motivos serão apagados de vez. Não dá para desfazer.</string>
     <string name="edit_habit_title">Editar hábito</string>
 
     <string name="home_empty_title">Nenhum hábito ainda</string>
@@ -175,13 +157,13 @@
 
     <string name="settings_data_section">Seus dados</string>
     <string name="settings_export">Exportar como CSV</string>
-    <string name="settings_export_detail">Hábitos, recaídas, vontades e motivos, para qualquer planilha</string>
+    <string name="settings_export_detail">Hábitos, recaídas e motivos, para qualquer planilha</string>
     <string name="settings_exported">Exportado.</string>
     <string name="settings_export_failed">Não foi possível exportar. Tente de novo.</string>
     <string name="settings_delete_all">Apagar todos os dados</string>
     <string name="settings_delete_all_detail">Todos os hábitos e o histórico</string>
     <string name="settings_delete_all_title">Apagar tudo?</string>
-    <string name="settings_delete_all_body">Todos os hábitos, recaídas, vontades e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia.</string>
+    <string name="settings_delete_all_body">Todos os hábitos, recaídas e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia.</string>
     <string name="settings_delete_all_confirm">Apagar tudo</string>
     <string name="settings_privacy_section">Privacidade</string>
     <string name="settings_privacy">Fica neste celular</string>
@@ -234,7 +216,6 @@
     <string name="error_log_slip">Não foi possível registrar a recaída</string>
     <string name="error_log_slip_body">Seu contador não foi zerado. Tente de novo.</string>
     <string name="error_save">Não foi possível salvar</string>
-    <string name="error_save_urge">Não foi possível salvar a vontade</string>
     <string name="error_delete">Não foi possível apagar</string>
     <string name="error_try_again">Tente de novo.</string>
 
@@ -256,31 +237,4 @@
     <string name="trophy_a11y_earned">%1$s, conquistado em %2$s</string>
     <string name="trophy_a11y_not_earned">%s, ainda não conquistado</string>
     <string name="trophy_a11y_personal">Meta pessoal: %s</string>
-    <string name="insights_empty">Adicione um hábito para ver quando é mais difícil e como suas sequências se somam.</string>
-    <string name="insights_hardest_title">Quando é mais difícil</string>
-    <string name="insights_time_of_day">Hora do dia</string>
-    <string name="insights_weekday">Dia da semana</string>
-    <string name="time_morning">Manhã</string>
-    <string name="time_afternoon">Tarde</string>
-    <string name="time_evening">Noite</string>
-    <string name="time_night">Madrugada</string>
-    <string name="insights_slips">Recaídas</string>
-    <string name="insights_urges">Vontades</string>
-    <string name="insights_hardest_time">Seu momento mais difícil: %s</string>
-    <string name="insights_not_enough">Ainda não há dados suficientes — isto se preenche conforme você registra recaídas e vontades.</string>
-    <string name="insights_streaks_title">Histórico de sequências</string>
-    <string name="streak_current">Atual</string>
-    <string name="streak_best">Melhor</string>
-    <string name="streak_since">Desde %s</string>
-    <string name="streak_only_current">Sequências anteriores aparecem aqui depois de uma recaída.</string>
-    <plurals name="slips_count">
-        <item quantity="one">%d recaída</item>
-        <item quantity="many">%d recaídas</item>
-        <item quantity="other">%d recaídas</item>
-    </plurals>
-    <plurals name="urges_count">
-        <item quantity="one">%d vontade</item>
-        <item quantity="many">%d vontades</item>
-        <item quantity="other">%d vontades</item>
-    </plurals>
 </resources>

@@ -15,7 +15,6 @@ enum class WriteError(@StringRes val title: Int, @StringRes val message: Int) {
   SaveHabit(R.string.error_save_habit, R.string.error_try_again),
   LogSlip(R.string.error_log_slip, R.string.error_log_slip_body),
   Save(R.string.error_save, R.string.error_try_again),
-  SaveUrge(R.string.error_save_urge, R.string.error_try_again),
   Delete(R.string.error_delete, R.string.error_try_again),
 }
 

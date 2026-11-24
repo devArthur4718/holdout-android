@@ -35,12 +35,6 @@ interface HabitRepository {
    */
   suspend fun logSlip(habitId: Long, at: Instant, trigger: SlipTrigger?): Habit?
 
-  /** Records an urge the user rode out. */
-  suspend fun logUrge(habitId: Long, startedAt: Instant, endedAt: Instant)
-
-  /** How many urges the user rode out for this habit since [since]. */
-  suspend fun countUrges(habitId: Long, since: Instant): Int
-
   /** The habit's slips, oldest first, updated whenever they change. */
   fun observeSlips(habitId: Long): Flow<List<Slip>>
 
@@ -55,9 +49,6 @@ interface HabitRepository {
 
   suspend fun deleteReason(id: Long)
 
-  /** Start times of the habit's urges, oldest first, updated whenever they change. */
-  fun observeUrges(habitId: Long): Flow<List<Instant>>
-
   /** Every habit's personal goals, fewest days first, updated whenever they change. */
   fun observeAllPersonalGoals(): Flow<List<PersonalGoal>>
 
@@ -70,7 +61,7 @@ interface HabitRepository {
   /** Changes what can be edited after the start. When the user last did it can't change. */
   suspend fun updateDetails(id: Long, kind: HabitKind, name: String, costPerDay: BigDecimal?, minutesPerDay: Int?)
 
-  /** Deletes the habit with its slips, urges, reasons and personal goals. */
+  /** Deletes the habit with its slips, reasons and personal goals. */
   suspend fun delete(id: Long)
 
   /** Deletes everything the app has stored. */
@@ -97,12 +88,6 @@ class RoomHabitRepository(private val database: QuitterDatabase) : HabitReposito
       updated
     }
 
-  override suspend fun logUrge(habitId: Long, startedAt: Instant, endedAt: Instant) {
-    dao.insert(UrgeEntity(habitId = habitId, startedAtMillis = startedAt.toEpochMilli(), endedAtMillis = endedAt.toEpochMilli()))
-  }
-
-  override suspend fun countUrges(habitId: Long, since: Instant): Int = dao.countUrges(habitId, since.toEpochMilli())
-
   override fun observeSlips(habitId: Long): Flow<List<Slip>> = dao.observeSlips(habitId).map { list ->
     list.map { Slip(Instant.ofEpochMilli(it.atMillis), SlipTrigger.entries.firstOrNull { t -> t.name == it.trigger }) }
   }
@@ -119,9 +104,6 @@ class RoomHabitRepository(private val database: QuitterDatabase) : HabitReposito
   override suspend fun updateReason(id: Long, text: String) = dao.updateReason(id, text)
 
   override suspend fun deleteReason(id: Long) = dao.deleteReason(id)
-
-  override fun observeUrges(habitId: Long): Flow<List<Instant>> =
-    dao.observeUrgeStarts(habitId).map { list -> list.map(Instant::ofEpochMilli) }
 
   override fun observeAllPersonalGoals(): Flow<List<PersonalGoal>> =
     dao.observeAllPersonalGoals().map { list -> list.map { it.toPersonalGoal() } }
@@ -143,7 +125,7 @@ class RoomHabitRepository(private val database: QuitterDatabase) : HabitReposito
   override suspend fun deleteAll() = withContext(Dispatchers.IO) { database.clearAllTables() }
 
   override suspend fun exportCsv(): String = database.withTransaction {
-    buildExportCsv(dao.allHabits().map { it.toHabit() }, dao.allSlips(), dao.allUrges(), dao.allReasons(), dao.allPersonalGoals())
+    buildExportCsv(dao.allHabits().map { it.toHabit() }, dao.allSlips(), dao.allReasons(), dao.allPersonalGoals())
   }
 }
 

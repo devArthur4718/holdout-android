@@ -28,7 +28,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/** The Trophies and Insights tabs, on a habit with two slips and an urge. */
+/** The Trophies tab, on a habit with two slips. */
 class TabsTest {
   @get:Rule(order = 0) val language = AppLanguageRule()
   @get:Rule(order = 1) val rule = createEmptyComposeRule()
@@ -44,7 +44,6 @@ class TabsTest {
     val id = app.habitRepository.add(HabitDraft(HabitKind.Smoking, "Cigarettes", daysAgo(40, 20), null, null))
     app.habitRepository.logSlip(id, daysAgo(25, 20), null)
     app.habitRepository.logSlip(id, daysAgo(10, 20), null)
-    app.habitRepository.logUrge(id, daysAgo(3, 21), daysAgo(3, 21).plusSeconds(300))
     scenario = ActivityScenario.launch(MainActivity::class.java)
   }
 
@@ -94,21 +93,5 @@ class TabsTest {
     rule.onNodeWithText("Delete this goal?").assertExists()
     rule.onAllNodesWithText("Delete goal")[1].performClick()
     rule.waitUntil(5_000) { rule.onAllNodes(hasDescriptionStarting("Personal goal:")).fetchSemanticsNodes().isEmpty() }
-  }
-
-  @Test fun insightsCountSlipsAndUrgesByTimeAndListStreaks() {
-    waitFor("Next trophy — 30 days")
-    rule.onNodeWithText("Insights").performClick()
-    waitFor("When it's hardest")
-
-    // Both slips at 20:00 and the urge at 21:00 are in the evening.
-    rule.onNode(hasContentDescription("Evening: 2 slips, 1 urge")).assertExists()
-    rule.onNode(hasContentDescription("Morning: 0 slips, 0 urges")).assertExists()
-    rule.onNodeWithText("Your hardest time: Evening").assertExists()
-
-    rule.onNodeWithText("Streak history").performScrollTo()
-    rule.onNode(hasText("Current")).performScrollTo().assertExists()
-    rule.onNode(hasText("Best")).performScrollTo().assertExists()
-    rule.onNodeWithText("Past streaks show up here after a slip.").assertDoesNotExist()
   }
 }

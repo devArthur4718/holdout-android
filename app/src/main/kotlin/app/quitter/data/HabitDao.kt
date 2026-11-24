@@ -14,11 +14,6 @@ interface HabitDao {
 
   @Insert suspend fun insert(slip: SlipEntity): Long
 
-  @Insert suspend fun insert(urge: UrgeEntity): Long
-
-  @Query("SELECT COUNT(*) FROM urges WHERE habitId = :habitId AND endedAtMillis >= :sinceMillis")
-  suspend fun countUrges(habitId: Long, sinceMillis: Long): Int
-
   @Query("SELECT * FROM habits WHERE id = :id")
   suspend fun get(id: Long): HabitEntity?
 
@@ -34,7 +29,7 @@ interface HabitDao {
   @Query("UPDATE habits SET kind = :kind, name = :name, costPerDay = :costPerDay, minutesPerDay = :minutesPerDay WHERE id = :id")
   suspend fun updateDetails(id: Long, kind: String, name: String, costPerDay: String?, minutesPerDay: Int?)
 
-  /** Its slips, urges, reasons and personal goals go with it (foreign keys cascade). */
+  /** Its slips, reasons and personal goals go with it (foreign keys cascade). */
   @Query("DELETE FROM habits WHERE id = :id")
   suspend fun delete(id: Long)
 
@@ -43,9 +38,6 @@ interface HabitDao {
 
   @Query("SELECT * FROM slips ORDER BY atMillis")
   suspend fun allSlips(): List<SlipEntity>
-
-  @Query("SELECT * FROM urges ORDER BY startedAtMillis")
-  suspend fun allUrges(): List<UrgeEntity>
 
   @Query("SELECT * FROM reasons ORDER BY createdAtMillis, id")
   suspend fun allReasons(): List<ReasonEntity>
@@ -69,9 +61,6 @@ interface HabitDao {
 
   @Query("SELECT * FROM reasons WHERE habitId = :habitId ORDER BY createdAtMillis, id")
   suspend fun reasons(habitId: Long): List<ReasonEntity>
-
-  @Query("SELECT startedAtMillis FROM urges WHERE habitId = :habitId ORDER BY startedAtMillis")
-  fun observeUrgeStarts(habitId: Long): Flow<List<Long>>
 
   @Insert suspend fun insert(goal: PersonalGoalEntity): Long
 

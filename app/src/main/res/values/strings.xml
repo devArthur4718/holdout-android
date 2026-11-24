@@ -59,7 +59,7 @@
     <string name="counter_past_title">You\'re already on your way</string>
     <string name="counter_past_body">The time since you stopped already counts. Your next trophy is at %s.</string>
     <string name="counter_go_to_habits">Go to my habits</string>
-    <string name="counter_ads_note">Quitter is free and ad-supported. Ads never appear during urge or slip flows.</string>
+    <string name="counter_ads_note">Quitter is free and ad-supported. Ads never appear while you log a slip.</string>
 
     <string name="free_for_smoking">Smoke-free for</string>
     <string name="free_for_alcohol">Alcohol-free for</string>
@@ -71,8 +71,7 @@
     <!-- Home -->
     <string name="home_title_today">Today</string>
     <string name="home_add_habit">Add habit</string>
-    <string name="home_urge">I have an urge</string>
-    <string name="home_log_slip">Log slip</string>
+    <string name="home_reset_counter">Reset Counter</string>
     <string name="home_personal_best_current">Personal best — you are on it</string>
     <string name="home_personal_best">Personal best: %s</string>
     <string name="home_money_kept">money kept</string>
@@ -95,7 +94,6 @@
     <string name="home_checkin_subtitle">A minute, once a day</string>
 
     <string name="tab_trophies">Trophies</string>
-    <string name="tab_insights">Insights</string>
     <string name="title_settings">Settings</string>
     <string name="coming_soon">Coming soon</string>
 
@@ -114,25 +112,10 @@
     <string name="slip_logged_short">Counter reset.</string>
     <string name="slip_logged">Counter reset. Longest streak of %s is kept.</string>
 
-    <!-- Urge timer -->
-    <string name="urge_label">Ride it out</string>
-    <string name="urge_close">Close</string>
-    <string name="urge_of_total">of 5:00</string>
-    <string name="urge_time_left">%1$s %2$s left</string>
-    <string name="urge_coach_breathe">Breathe in for four. Hold for four. Out for six.</string>
-    <string name="urge_coach_peak">This is the peak. It falls from here — stay with it.</string>
-    <string name="urge_coach_fading">Almost through. Notice it already fading.</string>
-    <string name="urge_coach_done">Five minutes. The urge passed — you rode it out.</string>
-    <string name="urge_got_through">I got through it</string>
-    <plurals name="urge_outlasted">
-        <item quantity="one">Urge logged and outlasted. That is %d this month.</item>
-        <item quantity="other">Urge logged and outlasted. That is %d this month.</item>
-    </plurals>
     <plurals name="seconds">
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
-    <string name="urge_your_reason">— one of your reasons</string>
 
     <!-- Habit detail -->
     <string name="detail_tracking_since">Tracking since %s</string>
@@ -155,16 +138,15 @@
     <string name="detail_slip">Slip</string>
     <string name="detail_day_untracked">not tracked</string>
     <string name="detail_day_future">not yet</string>
-    <string name="detail_reasons_empty">Why are you quitting? Write it in your own words. You will see it when an urge hits.</string>
+    <string name="detail_reasons_empty">Why are you quitting? Write it in your own words.</string>
     <string name="detail_add_reason">Add a reason</string>
     <string name="detail_delete_reason">Delete reason</string>
     <string name="detail_edit_reason">Edit reason</string>
     <string name="detail_reason_hint">e.g. I want to keep up with my kids</string>
-    <string name="detail_urge_timer">Urge timer</string>
     <string name="detail_more">More options</string>
     <string name="detail_delete">Delete habit</string>
     <string name="detail_delete_title">Delete %s?</string>
-    <string name="detail_delete_body">Its counter, slips, urges and reasons are deleted for good. This can\'t be undone.</string>
+    <string name="detail_delete_body">Its counter, slips and reasons are deleted for good. This can\'t be undone.</string>
     <string name="edit_habit_title">Edit habit</string>
 
     <string name="home_empty_title">No habits yet</string>
@@ -173,13 +155,13 @@
     <!-- Settings -->
     <string name="settings_data_section">Your data</string>
     <string name="settings_export">Export as CSV</string>
-    <string name="settings_export_detail">Habits, slips, urges and reasons, for any spreadsheet</string>
+    <string name="settings_export_detail">Habits, slips and reasons, for any spreadsheet</string>
     <string name="settings_exported">Exported.</string>
     <string name="settings_export_failed">Couldn\'t export. Please try again.</string>
     <string name="settings_delete_all">Delete all data</string>
     <string name="settings_delete_all_detail">Every habit and its history</string>
     <string name="settings_delete_all_title">Delete everything?</string>
-    <string name="settings_delete_all_body">All habits, slips, urges and reasons are deleted from this phone. This can\'t be undone. Export first if you want a copy.</string>
+    <string name="settings_delete_all_body">All habits, slips and reasons are deleted from this phone. This can\'t be undone. Export first if you want a copy.</string>
     <string name="settings_delete_all_confirm">Delete everything</string>
     <string name="settings_privacy_section">Privacy</string>
     <string name="settings_privacy">Stays on this phone</string>
@@ -227,7 +209,6 @@
     <string name="error_log_slip">Couldn\'t log the slip</string>
     <string name="error_log_slip_body">Your counter wasn\'t reset. Please try again.</string>
     <string name="error_save">Couldn\'t save</string>
-    <string name="error_save_urge">Couldn\'t save the urge</string>
     <string name="error_delete">Couldn\'t delete</string>
     <string name="error_try_again">Please try again.</string>
 
@@ -249,31 +230,4 @@
     <string name="trophy_a11y_earned">%1$s, earned %2$s</string>
     <string name="trophy_a11y_not_earned">%s, not earned yet</string>
     <string name="trophy_a11y_personal">Personal goal: %s</string>
-    <string name="insights_empty">Add a habit to see when it\'s hardest and how your streaks add up.</string>
-    <string name="insights_hardest_title">When it\'s hardest</string>
-    <string name="insights_time_of_day">Time of day</string>
-    <string name="insights_weekday">Day of the week</string>
-    <string name="time_morning">Morning</string>
-    <string name="time_afternoon">Afternoon</string>
-    <string name="time_evening">Evening</string>
-    <string name="time_night">Night</string>
-    <string name="insights_slips">Slips</string>
-    <string name="insights_urges">Urges</string>
-    <string name="insights_hardest_time">Your hardest time: %s</string>
-    <string name="insights_not_enough">Not enough data yet — this fills in as you log slips and urges.</string>
-    <string name="insights_streaks_title">Streak history</string>
-    <string name="streak_current">Current</string>
-    <string name="streak_best">Best</string>
-    <string name="streak_since">Since %s</string>
-    <string name="streak_only_current">Past streaks show up here after a slip.</string>
-    <plurals name="slips_count">
-        <item quantity="one">%d slip</item>
-        <item quantity="other">%d slips</item>
-    </plurals>
-    <plurals name="urges_count">
-        <item quantity="one">%d urge</item>
-        <item quantity="other">%d urges</item>
-    </plurals>
-    <string name="insights_bar_a11y" translatable="false">%1$s: %2$s, %3$s</string>
-    <string name="streak_range" translatable="false">%1$s → %2$s</string>
 </resources>

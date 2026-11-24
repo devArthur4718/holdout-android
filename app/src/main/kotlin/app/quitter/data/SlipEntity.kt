@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-/** One logged slip. Kept for insights later; deleting a habit deletes its slips. */
+/** One logged slip. Deleting a habit deletes its slips. */
 @Entity(
   tableName = "slips",
   foreignKeys = [

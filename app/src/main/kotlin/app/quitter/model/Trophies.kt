@@ -25,23 +25,6 @@ fun Habit.streaks(slips: List<Instant>, now: Instant): List<Streak> {
   return past + Streak(currentStart, null, Duration.between(currentStart, now).seconds.coerceAtLeast(0))
 }
 
-/** A streak as the history lists it. */
-data class StreakEntry(val streak: Streak, val isBest: Boolean)
-
-/** Past streaks shorter than this (e.g. two slips logged a moment apart) are left out of the history. */
-const val MIN_PAST_STREAK_SECONDS = 60L
-
-/**
- * The streak history, newest first. Past streaks under a minute are left out; the current one is
- * always kept, even at 0 minutes. With two or more rows left, the longest is marked best; on a tie,
- * the most recent one.
- */
-fun streakHistory(streaks: List<Streak>): List<StreakEntry> {
-  val newestFirst = streaks.reversed().filter { it.isCurrent || it.seconds >= MIN_PAST_STREAK_SECONDS }
-  val best = if (newestFirst.size >= 2) newestFirst.maxByOrNull { it.seconds } else null // maxBy keeps the first, i.e. newest, on a tie
-  return newestFirst.map { StreakEntry(it, isBest = it === best) }
-}
-
 /** A trophy in the grid: a standard or personal goal, and when it was earned (null: not yet). */
 data class Trophy(
   val days: Int,

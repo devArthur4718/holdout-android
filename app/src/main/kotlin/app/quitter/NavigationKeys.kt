@@ -20,8 +20,6 @@ import kotlinx.serialization.Serializable
 /** One habit's stats, calendar and reasons. */
 @Serializable data class HabitDetail(val habitId: Long) : NavKey
 
-/** The 5-minute urge timer for one habit. */
-@Serializable data class Urge(val habitId: Long) : NavKey
 
 /** A screen that isn't built yet. */
 @Serializable data class ComingSoon(@StringRes val title: Int) : NavKey

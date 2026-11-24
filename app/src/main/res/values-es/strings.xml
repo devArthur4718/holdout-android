@@ -60,7 +60,7 @@
     <string name="counter_past_title">Ya vas en camino</string>
     <string name="counter_past_body">El tiempo desde que lo dejaste ya cuenta. Tu próximo trofeo llega al cumplir %s.</string>
     <string name="counter_go_to_habits">Ir a mis hábitos</string>
-    <string name="counter_ads_note">Quitter es gratis y tiene anuncios. Nunca aparecen durante un antojo o una recaída.</string>
+    <string name="counter_ads_note">Quitter es gratis y tiene anuncios. Nunca aparecen mientras registras una recaída.</string>
 
     <string name="free_for_smoking">Sin fumar desde hace</string>
     <string name="free_for_alcohol">Sin alcohol desde hace</string>
@@ -71,8 +71,7 @@
 
     <string name="home_title_today">Hoy</string>
     <string name="home_add_habit">Agregar hábito</string>
-    <string name="home_urge">Tengo un antojo</string>
-    <string name="home_log_slip">Registrar recaída</string>
+    <string name="home_reset_counter">Reiniciar contador</string>
     <string name="home_personal_best_current">Récord personal — lo estás batiendo</string>
     <string name="home_personal_best">Récord personal: %s</string>
     <string name="home_money_kept">dinero ahorrado</string>
@@ -98,7 +97,6 @@
     <string name="home_checkin_subtitle">Un minuto, una vez al día</string>
 
     <string name="tab_trophies">Trofeos</string>
-    <string name="tab_insights">Análisis</string>
     <string name="title_settings">Ajustes</string>
     <string name="coming_soon">Próximamente</string>
 
@@ -116,26 +114,11 @@
     <string name="slip_logged_short">Contador reiniciado.</string>
     <string name="slip_logged">Contador reiniciado. Tu racha más larga, de %s, se mantiene.</string>
 
-    <string name="urge_label">Aguanta</string>
-    <string name="urge_close">Cerrar</string>
-    <string name="urge_of_total">de 5:00</string>
-    <string name="urge_time_left">quedan %1$s y %2$s</string>
-    <string name="urge_coach_breathe">Inhala contando hasta cuatro. Sostén cuatro. Exhala en seis.</string>
-    <string name="urge_coach_peak">Este es el pico. Desde aquí baja — quédate con él.</string>
-    <string name="urge_coach_fading">Casi lo logras. Fíjate cómo ya se está yendo.</string>
-    <string name="urge_coach_done">Cinco minutos. El antojo pasó — lo aguantaste.</string>
-    <string name="urge_got_through">Lo superé</string>
-    <plurals name="urge_outlasted">
-        <item quantity="one">Antojo registrado y superado. Es el %d.º este mes.</item>
-        <item quantity="many">Antojo registrado y superado. Ya van %d este mes.</item>
-        <item quantity="other">Antojo registrado y superado. Ya van %d este mes.</item>
-    </plurals>
     <plurals name="seconds">
         <item quantity="one">%d segundo</item>
         <item quantity="many">%d segundos</item>
         <item quantity="other">%d segundos</item>
     </plurals>
-    <string name="urge_your_reason">— uno de tus motivos</string>
 
     <string name="detail_tracking_since">Registrando desde el %s</string>
     <string name="detail_tab_stats">Números</string>
@@ -158,16 +141,15 @@
     <string name="detail_slip">Recaída</string>
     <string name="detail_day_untracked">sin registrar</string>
     <string name="detail_day_future">todavía no</string>
-    <string name="detail_reasons_empty">¿Por qué lo quieres dejar? Escríbelo con tus palabras. Lo verás cuando llegue un antojo.</string>
+    <string name="detail_reasons_empty">¿Por qué lo quieres dejar? Escríbelo con tus palabras.</string>
     <string name="detail_add_reason">Agregar un motivo</string>
     <string name="detail_delete_reason">Eliminar motivo</string>
     <string name="detail_edit_reason">Editar motivo</string>
     <string name="detail_reason_hint">p. ej.: quiero poder seguirles el ritmo a mis hijos</string>
-    <string name="detail_urge_timer">Temporizador de antojo</string>
     <string name="detail_more">Más opciones</string>
     <string name="detail_delete">Eliminar hábito</string>
     <string name="detail_delete_title">¿Eliminar %s?</string>
-    <string name="detail_delete_body">Su contador, recaídas, antojos y motivos se borrarán para siempre. No se puede deshacer.</string>
+    <string name="detail_delete_body">Su contador, recaídas y motivos se borrarán para siempre. No se puede deshacer.</string>
     <string name="edit_habit_title">Editar hábito</string>
 
     <string name="home_empty_title">Todavía no hay hábitos</string>
@@ -175,13 +157,13 @@
 
     <string name="settings_data_section">Tus datos</string>
     <string name="settings_export">Exportar como CSV</string>
-    <string name="settings_export_detail">Hábitos, recaídas, antojos y motivos, para cualquier hoja de cálculo</string>
+    <string name="settings_export_detail">Hábitos, recaídas y motivos, para cualquier hoja de cálculo</string>
     <string name="settings_exported">Exportado.</string>
     <string name="settings_export_failed">No se pudo exportar. Inténtalo de nuevo.</string>
     <string name="settings_delete_all">Borrar todos los datos</string>
     <string name="settings_delete_all_detail">Todos los hábitos y su historial</string>
     <string name="settings_delete_all_title">¿Borrar todo?</string>
-    <string name="settings_delete_all_body">Todos los hábitos, recaídas, antojos y motivos se borrarán de este teléfono. No se puede deshacer. Exporta antes si quieres una copia.</string>
+    <string name="settings_delete_all_body">Todos los hábitos, recaídas y motivos se borrarán de este teléfono. No se puede deshacer. Exporta antes si quieres una copia.</string>
     <string name="settings_delete_all_confirm">Borrar todo</string>
     <string name="settings_privacy_section">Privacidad</string>
     <string name="settings_privacy">Se queda en este teléfono</string>
@@ -233,7 +215,6 @@
     <string name="error_log_slip">No se pudo registrar la recaída</string>
     <string name="error_log_slip_body">Tu contador no se reinició. Inténtalo de nuevo.</string>
     <string name="error_save">No se pudo guardar</string>
-    <string name="error_save_urge">No se pudo guardar el antojo</string>
     <string name="error_delete">No se pudo borrar</string>
     <string name="error_try_again">Inténtalo de nuevo.</string>
 
@@ -255,31 +236,4 @@
     <string name="trophy_a11y_earned">%1$s, conseguido el %2$s</string>
     <string name="trophy_a11y_not_earned">%s, aún no conseguido</string>
     <string name="trophy_a11y_personal">Meta personal: %s</string>
-    <string name="insights_empty">Agrega un hábito para ver cuándo es más difícil y cómo se suman tus rachas.</string>
-    <string name="insights_hardest_title">Cuándo es más difícil</string>
-    <string name="insights_time_of_day">Momento del día</string>
-    <string name="insights_weekday">Día de la semana</string>
-    <string name="time_morning">Mañana</string>
-    <string name="time_afternoon">Tarde</string>
-    <string name="time_evening">Noche</string>
-    <string name="time_night">Madrugada</string>
-    <string name="insights_slips">Recaídas</string>
-    <string name="insights_urges">Antojos</string>
-    <string name="insights_hardest_time">Tu momento más difícil: %s</string>
-    <string name="insights_not_enough">Todavía no hay suficientes datos — esto se completa a medida que registras recaídas y antojos.</string>
-    <string name="insights_streaks_title">Historial de rachas</string>
-    <string name="streak_current">Actual</string>
-    <string name="streak_best">Mejor</string>
-    <string name="streak_since">Desde el %s</string>
-    <string name="streak_only_current">Las rachas anteriores aparecen aquí después de una recaída.</string>
-    <plurals name="slips_count">
-        <item quantity="one">%d recaída</item>
-        <item quantity="many">%d recaídas</item>
-        <item quantity="other">%d recaídas</item>
-    </plurals>
-    <plurals name="urges_count">
-        <item quantity="one">%d antojo</item>
-        <item quantity="many">%d antojos</item>
-        <item quantity="other">%d antojos</item>
-    </plurals>
 </resources>

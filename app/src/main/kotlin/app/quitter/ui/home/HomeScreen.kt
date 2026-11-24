@@ -26,7 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Psychology
 import androidx.compose.material.icons.rounded.Savings
 import androidx.compose.material.icons.rounded.Schedule
@@ -84,7 +83,6 @@ import java.time.Instant
 @Composable
 fun HomeRoute(
   onAddHabit: () -> Unit,
-  onUrge: (habitId: Long) -> Unit,
   onOpenDetail: (habitId: Long) -> Unit,
   onCheckIn: () -> Unit,
   snackbarHostState: SnackbarHostState,
@@ -129,7 +127,6 @@ fun HomeRoute(
         state = state,
         onSelect = viewModel::select,
         onAddHabit = onAddHabit,
-        onUrge = { onUrge(state.selected.id) },
         onLogSlip = { slipFor = state.selected.id },
         onOpenDetail = { onOpenDetail(state.selected.id) },
         onCheckIn = onCheckIn,
@@ -153,7 +150,6 @@ fun HomeScreen(
   state: HomeUiState.Ready,
   onSelect: (Long) -> Unit,
   onAddHabit: () -> Unit,
-  onUrge: () -> Unit,
   onLogSlip: () -> Unit,
   onOpenDetail: () -> Unit,
   onCheckIn: () -> Unit,
@@ -168,7 +164,7 @@ fun HomeScreen(
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
     HabitChipRow(state.chips, state.selected.id, onSelect, onAddHabit)
-    CounterCard(state.selected, state.progress, onUrge, onLogSlip)
+    CounterCard(state.selected, state.progress, onLogSlip)
     StatTiles(state.progress)
     NextTrophyCard(state.progress, onClick = onOpenDetail)
     if (Features.CHECK_IN) CheckInRow(onClick = onCheckIn)
@@ -244,7 +240,7 @@ fun HabitChipRow(chips: List<HabitChip>, selectedId: Long, onSelect: (Long) -> U
 }
 
 @Composable
-private fun CounterCard(habit: Habit, progress: HabitProgress, onUrge: () -> Unit, onLogSlip: () -> Unit) {
+private fun CounterCard(habit: Habit, progress: HabitProgress, onLogSlip: () -> Unit) {
   val colors = MaterialTheme.colorScheme
   Column(
     modifier = Modifier
@@ -278,22 +274,14 @@ private fun CounterCard(habit: Habit, progress: HabitProgress, onUrge: () -> Uni
       color = colors.onPrimaryContainer.copy(alpha = 0.85f),
       textAlign = TextAlign.Center,
     )
-    FlowRow(
-      modifier = Modifier.padding(top = 14.dp),
-      horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-      verticalArrangement = Arrangement.spacedBy(8.dp),
+    // Opens the log-a-slip sheet, which asks before the counter restarts.
+    Button(
+      onClick = onLogSlip,
+      modifier = Modifier.padding(top = 14.dp).heightIn(min = 48.dp),
+      contentPadding = PaddingValues(horizontal = 24.dp),
+      colors = ButtonDefaults.buttonColors(containerColor = colors.background, contentColor = colors.primary),
     ) {
-      Button(onClick = onUrge, contentPadding = PaddingValues(horizontal = 18.dp)) {
-        Icon(Icons.Rounded.Bolt, contentDescription = null, modifier = Modifier.size(18.dp))
-        Text(stringResource(R.string.home_urge), Modifier.padding(start = 8.dp))
-      }
-      Button(
-        onClick = onLogSlip,
-        contentPadding = PaddingValues(horizontal = 18.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = colors.background, contentColor = colors.primary),
-      ) {
-        Text(stringResource(R.string.home_log_slip))
-      }
+      Text(stringResource(R.string.home_reset_counter), textAlign = TextAlign.Center)
     }
   }
 }
@@ -416,6 +404,6 @@ private val previewState = HomeUiState.Ready(
 @Composable
 private fun HomeScreenPreview() {
   QuitterTheme {
-    Surface { HomeScreen(previewState, {}, {}, {}, {}, {}, {}) }
+    Surface { HomeScreen(previewState, {}, {}, {}, {}, {}) }
   }
 }

@@ -16,7 +16,6 @@ class ExportCsvTest {
     val csv = buildExportCsv(
       habits = listOf(habit),
       slips = listOf(SlipEntity(1, 1, millis, null)),
-      urges = listOf(UrgeEntity(1, 1, millis, millis + 300_500)),
       reasons = listOf(ReasonEntity(1, 1, "Lungs", millis)),
       goals = listOf(PersonalGoalEntity(1, 1, 45, null, millis)),
     )
@@ -25,7 +24,6 @@ class ExportCsvTest {
         "type,habit,kind,start,end,detail",
         "habit,Cigarettes,Smoking,2026-11-01T08:30:15Z,,",
         "slip,Cigarettes,,2026-11-04T09:00:07Z,,",
-        "urge,Cigarettes,,2026-11-04T09:00:07Z,2026-11-04T09:05:08Z,",
         "reason,Cigarettes,,2026-11-04T09:00:07Z,,Lungs",
         "goal,Cigarettes,,2026-11-04T09:00:07Z,,days: 45",
         "",
@@ -39,7 +37,6 @@ class ExportCsvTest {
     val csv = buildExportCsv(
       habits = listOf(habit),
       slips = listOf(SlipEntity(1, 1, Instant.parse("2026-11-04T09:00:00Z").toEpochMilli(), "Stress")),
-      urges = listOf(UrgeEntity(1, 1, Instant.parse("2026-11-05T21:30:00Z").toEpochMilli(), Instant.parse("2026-11-05T21:35:00Z").toEpochMilli())),
       reasons = listOf(ReasonEntity(1, 1, "She said \"stop\"", Instant.parse("2026-11-02T00:00:00Z").toEpochMilli())),
       goals = listOf(
         PersonalGoalEntity(1, 1, 45, "Beach, at last", Instant.parse("2026-11-03T00:00:00Z").toEpochMilli()),
@@ -51,7 +48,6 @@ class ExportCsvTest {
         "type,habit,kind,start,end,detail",
         "habit,\"Cigs, rolled\",Smoking,2026-11-01T00:00:00Z,,cost per day: 11.90; minutes per day: 90",
         "slip,\"Cigs, rolled\",,2026-11-04T09:00:00Z,,Stress",
-        "urge,\"Cigs, rolled\",,2026-11-05T21:30:00Z,2026-11-05T21:35:00Z,",
         "reason,\"Cigs, rolled\",,2026-11-02T00:00:00Z,,\"She said \"\"stop\"\"\"",
         "goal,\"Cigs, rolled\",,2026-11-03T00:00:00Z,,\"days: 45; name: Beach, at last\"",
         "goal,\"Cigs, rolled\",,2026-11-03T00:00:00Z,,days: 100",

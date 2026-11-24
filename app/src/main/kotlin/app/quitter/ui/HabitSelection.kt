@@ -4,7 +4,7 @@ import app.quitter.model.Habit
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
- * The habit picked on the Trophies and Insights tabs. Shared by both and kept while the app runs;
+ * The habit picked on the Trophies tab. Kept while the app runs;
  * null means "the newest habit".
  */
 class HabitSelection {

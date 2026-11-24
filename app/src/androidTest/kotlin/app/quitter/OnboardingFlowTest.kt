@@ -62,7 +62,7 @@ class OnboardingFlowTest {
     rule.onNodeWithText("Next trophy — 1 day").assertExists()
 
     // Logging a slip asks first, then restarts the counter.
-    rule.onNodeWithText("Log slip").performClick()
+    rule.onNodeWithText("Reset Counter").performClick()
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("Log a slip") }
     rule.onNodeWithText("Stress").performClick()
     rule.onNodeWithText("Reset counter").performClick()
@@ -75,15 +75,7 @@ class OnboardingFlowTest {
     }
     org.junit.Assert.assertEquals("Stress", trigger)
 
-    // The urge timer runs, and riding it out is confirmed on the home.
-    rule.onNodeWithText("I have an urge").performClick()
-    rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("RIDE IT OUT") }
-    rule.onNodeWithText("Breathe in for four. Hold for four. Out for six.").assertExists()
-    rule.onNodeWithText("I got through it").performClick()
-    rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("That is 1 this month", substring = true) }
-    rule.onAllNodesWithText("Today").onFirst().assertExists() // title and tab
-
-    // The habit's detail: tabs, and a reason that the urge timer then shows.
+    // The habit's detail: tabs, and a reason.
     rule.onNodeWithText("Next trophy — 1 day").performClick()
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("Tracking since", substring = true) }
     rule.onNodeWithText("Calendar").performClick()
@@ -93,9 +85,6 @@ class OnboardingFlowTest {
     rule.onNode(androidx.compose.ui.test.hasSetTextAction()).performTextInput("For my lungs")
     rule.onNodeWithText("Save").performClick()
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("For my lungs") }
-    rule.onNodeWithText("Urge timer").performClick()
-    rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("“For my lungs”") }
-    rule.onNodeWithContentDescription("Close").performClick()
     rule.onNodeWithContentDescription("Back").performClick()
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("Today") }
 

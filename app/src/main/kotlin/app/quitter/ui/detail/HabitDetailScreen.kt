@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -28,7 +29,6 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.MoreVert
@@ -36,13 +36,12 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.PrimaryTabRow
@@ -97,7 +96,6 @@ import app.quitter.model.calendarMonth
 import app.quitter.model.progressAt
 import app.quitter.model.savingsByMonth
 import app.quitter.model.trackingSince
-import app.quitter.ui.UserMessage
 import app.quitter.ui.WriteErrorDialog
 import app.quitter.ui.clockTicker
 import app.quitter.ui.ProgressArc
@@ -118,7 +116,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun HabitDetailRoute(habitId: Long, onBack: () -> Unit, onUrge: () -> Unit, onEdit: () -> Unit) {
+fun HabitDetailRoute(habitId: Long, onBack: () -> Unit, onEdit: () -> Unit) {
   val context = LocalContext.current
   val resources = LocalResources.current
   val app = context.applicationContext as QuitterApplication
@@ -144,16 +142,6 @@ fun HabitDetailRoute(habitId: Long, onBack: () -> Unit, onUrge: () -> Unit, onEd
       }
     }
   }
-  // The urge timer reports back here when it was opened from this screen.
-  LaunchedEffect(Unit) {
-    app.userMessages.messages.collect { message ->
-      when (message) {
-        is UserMessage.UrgeOutlasted -> snackbarHostState.showSnackbar(
-          resources.getQuantityString(R.plurals.urge_outlasted, message.countThisMonth, message.countThisMonth),
-        )
-      }
-    }
-  }
 
   when (val state = uiState) {
     HabitDetailUiState.Loading -> Box(Modifier.fillMaxSize())
@@ -169,7 +157,6 @@ fun HabitDetailRoute(habitId: Long, onBack: () -> Unit, onUrge: () -> Unit, onEd
         onAddReason = viewModel::addReason,
         onUpdateReason = viewModel::updateReason,
         onDeleteReason = viewModel::deleteReason,
-        onUrge = onUrge,
         onLogSlip = { slipSheetOpen = true },
         onEdit = onEdit,
         onDelete = viewModel::deleteHabit,
@@ -197,7 +184,6 @@ fun HabitDetailScreen(
   onAddReason: (String) -> Unit,
   onUpdateReason: (Long, String) -> Unit,
   onDeleteReason: (Long) -> Unit,
-  onUrge: () -> Unit,
   onLogSlip: () -> Unit,
   onEdit: () -> Unit = {},
   onDelete: () -> Unit = {},
@@ -236,7 +222,7 @@ fun HabitDetailScreen(
         colors = TopAppBarDefaults.topAppBarColors(containerColor = colors.background),
       )
     },
-    bottomBar = { ActionBar(onUrge, onLogSlip) },
+    bottomBar = { ActionBar(onLogSlip) },
   ) { padding ->
     Column(
       modifier = Modifier
@@ -305,26 +291,25 @@ private val DetailTab.title: Int
   }
 
 @Composable
-private fun ActionBar(onUrge: () -> Unit, onLogSlip: () -> Unit) {
+private fun ActionBar(onLogSlip: () -> Unit) {
   val colors = MaterialTheme.colorScheme
-  Row(
+  Box(
     modifier = Modifier
+      .fillMaxWidth()
       .background(colors.background)
       .navigationBarsPadding()
       .padding(horizontal = 16.dp, vertical = 10.dp),
-    horizontalArrangement = Arrangement.spacedBy(10.dp),
+    contentAlignment = Alignment.Center,
   ) {
-    Button(onClick = onUrge, modifier = Modifier.weight(1f).heightIn(min = 48.dp)) {
-      Icon(Icons.Rounded.Bolt, contentDescription = null, modifier = Modifier.size(19.dp))
-      Text(stringResource(R.string.detail_urge_timer), Modifier.padding(start = 8.dp))
-    }
-    FilledIconButton(
+    // Opens the log-a-slip sheet, which asks before the counter restarts.
+    Button(
       onClick = onLogSlip,
-      modifier = Modifier.size(48.dp),
-      shape = RoundedCornerShape(24.dp),
-      colors = IconButtonDefaults.filledIconButtonColors(containerColor = colors.errorContainer, contentColor = colors.onErrorContainer),
+      modifier = Modifier.heightIn(min = 48.dp),
+      contentPadding = PaddingValues(horizontal = 24.dp),
+      colors = ButtonDefaults.buttonColors(containerColor = colors.errorContainer, contentColor = colors.onErrorContainer),
     ) {
-      Icon(Icons.Rounded.RestartAlt, stringResource(R.string.home_log_slip))
+      Icon(Icons.Rounded.RestartAlt, contentDescription = null, modifier = Modifier.size(19.dp))
+      Text(stringResource(R.string.home_reset_counter), Modifier.padding(start = 8.dp), textAlign = TextAlign.Center)
     }
   }
 }

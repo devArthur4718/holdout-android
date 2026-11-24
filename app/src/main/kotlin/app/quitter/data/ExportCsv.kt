@@ -6,13 +6,12 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 /**
- * One CSV with a row per habit, slip, urge, reason and personal goal, so it opens in any spreadsheet.
+ * One CSV with a row per habit, slip, reason and personal goal, so it opens in any spreadsheet.
  * Times are UTC in ISO 8601, e.g. 2026-11-18T21:30:00Z.
  */
 internal fun buildExportCsv(
   habits: List<Habit>,
   slips: List<SlipEntity>,
-  urges: List<UrgeEntity>,
   reasons: List<ReasonEntity>,
   goals: List<PersonalGoalEntity> = emptyList(),
 ): String {
@@ -26,12 +25,6 @@ internal fun buildExportCsv(
     rows += listOf("habit", it.name, it.kind.name, csvTime(it.trackingSince), "", detail)
   }
   slips.forEach { rows += listOf("slip", names[it.habitId].orEmpty(), "", csvTime(it.atMillis), "", it.trigger.orEmpty()) }
-  urges.forEach {
-    rows += listOf(
-      "urge", names[it.habitId].orEmpty(), "",
-      csvTime(it.startedAtMillis), csvTime(it.endedAtMillis), "",
-    )
-  }
   reasons.forEach { rows += listOf("reason", names[it.habitId].orEmpty(), "", csvTime(it.createdAtMillis), "", it.text) }
   goals.forEach {
     val detail = listOfNotNull("days: ${it.days}", it.name?.let { name -> "name: $name" }).joinToString("; ")

@@ -108,6 +108,32 @@ class MigrationTest {
     }
   }
 
+  @Test fun version5DataSurvivesAndUrgesAreDropped() {
+    helper.createDatabase(DB, 5).use { db ->
+      db.execSQL(
+        "INSERT INTO habits (id, kind, name, lastDoneAtMillis, costPerDay, minutesPerDay, bestSeconds, bankedSeconds) " +
+          "VALUES (1, 'Smoking', 'Cigarettes', 1700000000000, NULL, NULL, 0, 0)",
+      )
+      db.execSQL("INSERT INTO slips (habitId, atMillis, `trigger`) VALUES (1, 1700000000000, 'Stress')")
+      db.execSQL("INSERT INTO urges (habitId, startedAtMillis, endedAtMillis) VALUES (1, 1700000000000, 1700000300000)")
+      db.execSQL("INSERT INTO reasons (habitId, text, createdAtMillis) VALUES (1, 'For my lungs', 1700000000000)")
+      db.execSQL("INSERT INTO personal_goals (habitId, days, name, createdAtMillis) VALUES (1, 45, 'Beach trip', 1700000000000)")
+    }
+
+    helper.runMigrationsAndValidate(DB, 6, true).use { db ->
+      for ((table, expected) in listOf("habits" to 1, "slips" to 1, "reasons" to 1, "personal_goals" to 1)) {
+        db.query("SELECT COUNT(*) FROM $table").use { c ->
+          c.moveToFirst()
+          assertEquals(table, expected, c.getInt(0))
+        }
+      }
+      db.query("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = 'urges'").use { c ->
+        c.moveToFirst()
+        assertEquals(0, c.getInt(0))
+      }
+    }
+  }
+
   private companion object {
     const val DB = "migration-test"
   }

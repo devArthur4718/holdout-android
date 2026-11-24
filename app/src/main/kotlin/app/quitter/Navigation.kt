@@ -22,7 +22,6 @@ import app.quitter.ui.main.MainActions
 import app.quitter.ui.main.MainTabs
 import app.quitter.ui.placeholder.ComingSoonScreen
 import app.quitter.ui.settings.SettingsRoute
-import app.quitter.ui.urge.UrgeRoute
 
 @Composable
 fun MainNavigation() {
@@ -72,7 +71,6 @@ private fun QuitterNavDisplay(start: NavKey) {
         MainTabs(
           object : MainActions {
             override fun addHabit() { backStack.add(NewHabit) }
-            override fun urge(habitId: Long) { backStack.add(Urge(habitId)) }
             override fun openDetail(habitId: Long) { backStack.add(HabitDetail(habitId)) }
             override fun openSettings() { backStack.add(Settings) }
             override fun open(comingSoonTitle: Int) { backStack.add(ComingSoon(comingSoonTitle)) }
@@ -83,7 +81,6 @@ private fun QuitterNavDisplay(start: NavKey) {
         HabitDetailRoute(
           habitId = key.habitId,
           onBack = { backStack.removeLastOrNull() },
-          onUrge = { backStack.add(Urge(key.habitId)) },
           onEdit = { backStack.add(EditHabit(key.habitId)) },
         )
       }
@@ -100,9 +97,6 @@ private fun QuitterNavDisplay(start: NavKey) {
           // Nothing is left, so start again from the welcome screen.
           onAllDeleted = { resetTo(Welcome) },
         )
-      }
-      entry<Urge> { key ->
-        UrgeRoute(habitId = key.habitId, onClose = { backStack.removeLastOrNull() })
       }
       entry<ComingSoon> { key ->
         ComingSoonScreen(stringResource(key.title), onBack = { backStack.removeLastOrNull() })
