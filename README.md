@@ -10,9 +10,9 @@ Your last cigarette, drink or bet starts the clock. Quitter shows how long you'v
 ![Languages](https://img.shields.io/badge/languages-EN%20%C2%B7%20PT--BR%20%C2%B7%20ES-6750A4)
 
 <p align="center">
-  <img src="docs/screenshots/today.png" width="200" alt="Today: a live counter for Cigarettes at 19 days, with money kept and time back">
+  <img src="docs/screenshots/today.png" width="200" alt="Today: a live counter for Cigarettes at 12 days, with money kept and time back">
   <img src="docs/screenshots/stats.png" width="200" alt="Habit detail: money kept, time back and a savings chart">
-  <img src="docs/screenshots/calendar.png" width="200" alt="Calendar: clean days in purple and one slip day in pink">
+  <img src="docs/screenshots/trophies.png" width="200" alt="Trophies: 1 day and 1 week earned, 30 days next">
 </p>
 
 > The iOS app, built natively in SwiftUI with the same features, lives in [quitter-ios](https://github.com/devArthur4718/quitter-ios).
@@ -34,7 +34,7 @@ Your last cigarette, drink or bet starts the clock. Quitter shows how long you'v
 | **Stats** — money kept and time back across every streak, and a six-month savings chart. | **Calendar** — every day since you started, clean or slip, month by month. |
 | <img src="docs/screenshots/stats.png" width="240" alt="Stats tab"> | <img src="docs/screenshots/calendar.png" width="240" alt="Calendar tab"> |
 | **Reasons** — why you're quitting, in your own words. | **Trophies** — a trophy at 1 day, 1 week, 30, 60 and 90 days, 6 months, 1 year, 1½ years, 2 years and then every year; earned ones keep their date, even after a slip. Add personal goals (e.g. 45 days, "Beach trip"); they join the ladder, the arc and the notifications. |
-| <img src="docs/screenshots/reasons.png" width="240" alt="Reasons tab"> | |
+| <img src="docs/screenshots/reasons.png" width="240" alt="Reasons tab"> | <img src="docs/screenshots/trophies.png" width="240" alt="Trophies tab: 1 day and 1 week earned, 30 days next"> |
 | **Welcome** — no sign-up; one tap to your first habit. | **Settings** — trophy notifications, CSV export of everything, delete all data. |
 | <img src="docs/screenshots/welcome.png" width="240" alt="Welcome screen"> | <img src="docs/screenshots/settings.png" width="240" alt="Settings screen"> |
 
