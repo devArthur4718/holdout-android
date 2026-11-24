@@ -8,6 +8,32 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ExportCsvTest {
+  @Test fun timesAreUtcWithWholeSecondsNeverMilliseconds() {
+    assertEquals("2026-11-23T22:05:31Z", csvTime(Instant.parse("2026-11-23T22:05:31.987Z")))
+    assertEquals("2026-11-23T22:05:00Z", csvTime(Instant.parse("2026-11-23T22:05:00Z")))
+    val habit = Habit(1, HabitKind.Smoking, "Cigarettes", Instant.parse("2026-11-01T08:30:15.250Z"), null, null)
+    val millis = Instant.parse("2026-11-04T09:00:07.999Z").toEpochMilli()
+    val csv = buildExportCsv(
+      habits = listOf(habit),
+      slips = listOf(SlipEntity(1, 1, millis, null)),
+      urges = listOf(UrgeEntity(1, 1, millis, millis + 300_500)),
+      reasons = listOf(ReasonEntity(1, 1, "Lungs", millis)),
+      goals = listOf(PersonalGoalEntity(1, 1, 45, null, millis)),
+    )
+    assertEquals(
+      listOf(
+        "type,habit,kind,start,end,detail",
+        "habit,Cigarettes,Smoking,2026-11-01T08:30:15Z,,",
+        "slip,Cigarettes,,2026-11-04T09:00:07Z,,",
+        "urge,Cigarettes,,2026-11-04T09:00:07Z,2026-11-04T09:05:08Z,",
+        "reason,Cigarettes,,2026-11-04T09:00:07Z,,Lungs",
+        "goal,Cigarettes,,2026-11-04T09:00:07Z,,days: 45",
+        "",
+      ),
+      csv.split("\r\n"),
+    )
+  }
+
   @Test fun writesOneRowPerItemAndQuotesWhereNeeded() {
     val habit = Habit(1, HabitKind.Smoking, "Cigs, rolled", Instant.parse("2026-11-01T00:00:00Z"), BigDecimal("11.90"), 90)
     val csv = buildExportCsv(

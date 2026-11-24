@@ -126,8 +126,12 @@ class TrophiesViewModel(
     _editor.value = null
   }
 
+  /** True while a save is being written; a second tap on Save is ignored so a goal isn't added twice. */
+  private var saving = false
+
   /** Checks the form; when it's valid, saves the goal and closes the form. */
   fun save() {
+    if (saving) return
     val form = _editor.value ?: return
     val existing = (uiState.value as? TrophiesUiState.Ready)?.personalGoals.orEmpty()
     val error = validatePersonalGoal(form.daysText, existing, form.editingId)
@@ -137,12 +141,17 @@ class TrophiesViewModel(
     }
     val days = parseGoalDays(form.daysText) ?: return
     val name = cleanGoalName(form.name)
+    saving = true
     viewModelScope.launch {
-      val saved = _writeError.attempt(WriteError.Save) {
-        if (form.editingId == null) repository.addPersonalGoal(form.habitId, days, name, now())
-        else repository.updatePersonalGoal(form.editingId, days, name)
+      try {
+        val saved = _writeError.attempt(WriteError.Save) {
+          if (form.editingId == null) repository.addPersonalGoal(form.habitId, days, name, now())
+          else repository.updatePersonalGoal(form.editingId, days, name)
+        }
+        if (saved != null) _editor.value = null
+      } finally {
+        saving = false
       }
-      if (saved != null) _editor.value = null
     }
   }
 

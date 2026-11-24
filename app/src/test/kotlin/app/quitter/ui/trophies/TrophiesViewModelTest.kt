@@ -11,7 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -124,6 +127,27 @@ class TrophiesViewModelTest {
     vm.confirmDelete()
     assertNull(vm.editor.value)
     assertTrue(repository.goals.value.isEmpty())
+  }
+
+  @Test fun aDoubleTapOnSaveAddsTheGoalOnce() = runTest {
+    // Writes wait for the test to let them run, as a real database write would take a moment.
+    Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+    add("Cigarettes")
+    val vm = vm()
+    runCurrent()
+    vm.newGoal()
+    vm.updateDays("45")
+    vm.save()
+    vm.save()
+    advanceUntilIdle()
+    assertEquals(1, repository.goals.value.size)
+    assertNull(vm.editor.value)
+    // Once the first save is done, Save works again.
+    vm.newGoal()
+    vm.updateDays("50")
+    vm.save()
+    advanceUntilIdle()
+    assertEquals(2, repository.goals.value.size)
   }
 
   @Test fun aFailedSaveShowsCouldntSaveAndKeepsTheForm() = runTest(UnconfinedTestDispatcher()) {
