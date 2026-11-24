@@ -1,5 +1,8 @@
 package app.quitter.ui.home
 
+import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNull
+import app.quitter.ui.WriteError
 import app.quitter.data.FakeHabitRepository
 import app.quitter.model.HabitDraft
 import app.quitter.model.HabitKind
@@ -81,5 +84,20 @@ class HomeViewModelTest {
     backgroundScope.launch { vm.uiState.collect {} }
     repository.delete(id)
     assertEquals(HomeUiState.Empty, vm.uiState.value)
+  }
+
+  @Test fun aFailedSlipShowsAnErrorAndKeepsTheCounter() = runTest(UnconfinedTestDispatcher()) {
+    val id = add("Cigarettes")
+    val vm = HomeViewModel(repository, now, now = { now.value })
+    backgroundScope.launch { vm.uiState.collect {} }
+    repository.failWrites = true
+
+    vm.logSlip(id, SlipTrigger.Stress)
+
+    assertEquals(WriteError.LogSlip, vm.writeError.value)
+    assertEquals(3_600L, (vm.uiState.value as HomeUiState.Ready).progress.elapsedSeconds)
+    assertTrue(repository.slips.value.isEmpty())
+    vm.dismissWriteError()
+    assertNull(vm.writeError.value)
   }
 }

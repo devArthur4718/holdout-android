@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import app.quitter.data.HabitRepository
 import app.quitter.model.HabitDraft
 import app.quitter.model.HabitKind
+import app.quitter.ui.WriteError
+import app.quitter.ui.attempt
 import java.math.BigDecimal
 import java.time.Clock
 import java.time.Instant
@@ -54,6 +56,14 @@ class NewHabitViewModel(
     NewHabitUiState(kind = HabitKind.Smoking, name = defaultName(HabitKind.Smoking), isEditing = editingId != null),
   )
   val uiState: StateFlow<NewHabitUiState> = _uiState.asStateFlow()
+
+  private val _writeError = MutableStateFlow<WriteError?>(null)
+  /** Saving failed: "Couldn't save the habit". The form stays as it was, so the user can try again. */
+  val writeError: StateFlow<WriteError?> = _writeError.asStateFlow()
+
+  fun dismissWriteError() {
+    _writeError.value = null
+  }
 
   init {
     if (editingId != null) {
@@ -105,12 +115,15 @@ class NewHabitViewModel(
     saving = true
     viewModelScope.launch {
       try {
-        if (editingId == null) {
-          onSaved(repository.add(draft))
-        } else {
-          repository.updateDetails(editingId, draft.kind, draft.name, draft.costPerDay, draft.minutesPerDay)
-          onSaved(editingId)
+        val id = _writeError.attempt(WriteError.SaveHabit) {
+          if (editingId == null) {
+            repository.add(draft)
+          } else {
+            repository.updateDetails(editingId, draft.kind, draft.name, draft.costPerDay, draft.minutesPerDay)
+            editingId
+          }
         }
+        if (id != null) onSaved(id)
       } finally {
         saving = false
       }

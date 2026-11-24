@@ -60,6 +60,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.quitter.QuitterApplication
 import app.quitter.R
 import app.quitter.model.UrgePhase
+import app.quitter.ui.WriteErrorDialog
 import app.quitter.ui.clockTicker
 
 /**
@@ -81,6 +82,8 @@ fun UrgeRoute(habitId: Long, onClose: () -> Unit) {
     UrgeViewModel(habitId, app.habitRepository, app.userMessages, clockTicker(), createSavedStateHandle())
   }
   val state by viewModel.uiState.collectAsStateWithLifecycle()
+  val writeError by viewModel.writeError.collectAsStateWithLifecycle()
+  WriteErrorDialog(writeError, onDismiss = viewModel::dismissWriteError)
   UrgeScreen(state, onClose = onClose, onGotThroughIt = { viewModel.gotThroughIt(onClose) })
 }
 

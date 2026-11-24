@@ -1,5 +1,7 @@
 package app.quitter.ui.detail
 
+import org.junit.Assert.assertTrue
+import app.quitter.ui.WriteError
 import androidx.lifecycle.SavedStateHandle
 import app.quitter.data.FakeHabitRepository
 import app.quitter.model.HabitDraft
@@ -112,5 +114,31 @@ class HabitDetailViewModelTest {
     vm.deleteHabit()
     assertEquals(HabitDetailUiState.Gone, vm.uiState.value)
     assertEquals(emptyList<Any>(), repository.reasons.value)
+  }
+
+  @Test fun failedWritesShowCouldntSave() = runTest(UnconfinedTestDispatcher()) {
+    val vm = vm()
+    backgroundScope.launch { vm.uiState.collect {} }
+    vm.addReason("For my lungs")
+    val reasonId = repository.reasons.value.single().second.id
+    repository.failWrites = true
+
+    vm.addReason("Another")
+    assertEquals(WriteError.Save, vm.writeError.value)
+    vm.dismissWriteError()
+    vm.updateReason(reasonId, "Changed")
+    assertEquals(WriteError.Save, vm.writeError.value)
+    vm.dismissWriteError()
+    vm.deleteReason(reasonId)
+    assertEquals(WriteError.Save, vm.writeError.value)
+    vm.dismissWriteError()
+    vm.logSlip(null)
+    assertEquals(WriteError.Save, vm.writeError.value)
+    vm.dismissWriteError()
+    vm.deleteHabit()
+    assertEquals(WriteError.Save, vm.writeError.value)
+
+    assertEquals(listOf("For my lungs"), repository.reasons.value.map { it.second.text })
+    assertTrue(vm.uiState.value is HabitDetailUiState.Ready)
   }
 }

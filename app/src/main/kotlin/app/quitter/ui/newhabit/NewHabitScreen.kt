@@ -52,7 +52,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
@@ -71,6 +70,7 @@ import app.quitter.QuitterApplication
 import app.quitter.R
 import app.quitter.model.HabitKind
 import app.quitter.ui.theme.QuitterTheme
+import app.quitter.ui.WriteErrorDialog
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.time.Instant
@@ -99,6 +99,8 @@ fun NewHabitRoute(
     )
   }
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val writeError by viewModel.writeError.collectAsStateWithLifecycle()
+  WriteErrorDialog(writeError, onDismiss = viewModel::dismissWriteError)
   NewHabitScreen(
     uiState = uiState,
     onBack = onBack,
@@ -124,6 +126,10 @@ fun NewHabitScreen(
   onStart: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val minutesTooHigh = stringResource(
+    R.string.new_habit_minutes_too_high,
+    NumberFormat.getIntegerInstance().format(MAX_MINUTES_PER_DAY),
+  )
   val colors = MaterialTheme.colorScheme
   var showDatePicker by rememberSaveable { mutableStateOf(false) }
   var pickedDate by rememberSaveable { mutableStateOf<LocalDate?>(null) }
@@ -210,7 +216,7 @@ fun NewHabitScreen(
           singleLine = true,
           isError = uiState.minutesTooHigh,
           supportingText = if (uiState.minutesTooHigh) {
-            { Text(stringResource(R.string.new_habit_minutes_too_high)) }
+            { Text(minutesTooHigh) }
           } else null,
           keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
           modifier = Modifier.weight(1f),

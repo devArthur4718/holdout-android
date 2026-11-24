@@ -5,6 +5,7 @@ import app.quitter.data.HabitRepository
 import app.quitter.data.QuitterDatabase
 import app.quitter.data.RoomHabitRepository
 import app.quitter.notifications.MilestoneNotifications
+import app.quitter.ui.HabitSelection
 import app.quitter.ui.UserMessages
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ class QuitterApplication : Application() {
   val database: QuitterDatabase by lazy { QuitterDatabase.create(this) }
   val habitRepository: HabitRepository by lazy { RoomHabitRepository(database) }
   val userMessages = UserMessages()
+  val habitSelection = HabitSelection()
   val milestones: MilestoneNotifications by lazy { MilestoneNotifications(this, habitRepository) }
 
   override fun onCreate() {

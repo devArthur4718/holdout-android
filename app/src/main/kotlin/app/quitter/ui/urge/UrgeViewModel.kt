@@ -8,6 +8,8 @@ import app.quitter.model.URGE_SECONDS
 import app.quitter.model.UrgePhase
 import app.quitter.ui.UserMessage
 import app.quitter.ui.UserMessages
+import app.quitter.ui.WriteError
+import app.quitter.ui.attempt
 import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -62,15 +65,30 @@ class UrgeViewModel(
 
   private var saving = false
 
+  private val _writeError = MutableStateFlow<WriteError?>(null)
+  /** Saving failed: "Couldn't save the urge". The timer stays open, so the user can try again. */
+  val writeError: StateFlow<WriteError?> = _writeError.asStateFlow()
+
+  fun dismissWriteError() {
+    _writeError.value = null
+  }
+
   /** Saves the urge, queues "Urge logged and outlasted" for the home, then calls [onDone]. */
   fun gotThroughIt(onDone: () -> Unit) {
     if (saving) return
     saving = true
     viewModelScope.launch {
       val end = now()
-      repository.logUrge(habitId, startedAt, end)
-      val monthStart = end.atZone(zone).toLocalDate().withDayOfMonth(1).atStartOfDay(zone).toInstant()
-      messages.post(UserMessage.UrgeOutlasted(repository.countUrges(habitId, monthStart)))
+      val countThisMonth = _writeError.attempt(WriteError.SaveUrge) {
+        repository.logUrge(habitId, startedAt, end)
+        val monthStart = end.atZone(zone).toLocalDate().withDayOfMonth(1).atStartOfDay(zone).toInstant()
+        repository.countUrges(habitId, monthStart)
+      }
+      if (countThisMonth == null) {
+        saving = false // Not saved: the button works again.
+        return@launch
+      }
+      messages.post(UserMessage.UrgeOutlasted(countThisMonth))
       onDone()
     }
   }

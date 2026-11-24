@@ -8,9 +8,13 @@ import app.quitter.model.Habit
 import app.quitter.model.HabitProgress
 import app.quitter.model.SlipTrigger
 import app.quitter.model.progressAt
+import app.quitter.ui.WriteError
+import app.quitter.ui.attempt
 import java.time.Instant
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -49,11 +53,19 @@ class HomeViewModel(
   private val _events = Channel<HomeEvent>(Channel.BUFFERED)
   val events: Flow<HomeEvent> = _events.receiveAsFlow()
 
+  private val _writeError = MutableStateFlow<WriteError?>(null)
+  /** Logging a slip failed: "Couldn't log the slip". The counter keeps running. */
+  val writeError: StateFlow<WriteError?> = _writeError.asStateFlow()
+
+  fun dismissWriteError() {
+    _writeError.value = null
+  }
+
   /** The habit the user picked; null means "the newest one". Survives process death. */
   private val selectedId = savedState.getStateFlow<Long?>(SELECTED_ID, null)
 
   val uiState: StateFlow<HomeUiState> =
-    combine(repository.observeAll(), selectedId, ticker) { habits, id, now ->
+    combine(repository.observeAll(), repository.observeAllPersonalGoals(), selectedId, ticker) { habits, goals, id, now ->
       val selected = habits.firstOrNull { it.id == id } ?: habits.lastOrNull()
       if (selected == null) {
         HomeUiState.Empty
@@ -61,7 +73,7 @@ class HomeViewModel(
         HomeUiState.Ready(
           chips = habits.map { HabitChip(it.id, it.name) },
           selected = selected,
-          progress = selected.progressAt(now),
+          progress = selected.progressAt(now, goals.filter { it.habitId == selected.id }),
         )
       }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeUiState.Loading)
@@ -73,7 +85,7 @@ class HomeViewModel(
   /** Restarts [habitId]'s counter from now. Its longest streak and money kept stay. */
   fun logSlip(habitId: Long, trigger: SlipTrigger?) {
     viewModelScope.launch {
-      val habit = repository.logSlip(habitId, now(), trigger) ?: return@launch
+      val habit = _writeError.attempt(WriteError.LogSlip) { repository.logSlip(habitId, now(), trigger) } ?: return@launch
       _events.send(HomeEvent.SlipLogged(habit.bestSeconds))
     }
   }

@@ -3,6 +3,8 @@ package app.quitter
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
@@ -54,7 +56,7 @@ class OnboardingFlowTest {
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("Online poker") }
 
     rule.onNodeWithText("Go to my habits").performClick()
-    rule.onNodeWithText("Today").assertExists()
+    rule.onAllNodesWithText("Today").onFirst().assertExists() // title and tab
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("BET-FREE FOR") }
     rule.onNodeWithText("Online poker").assertExists() // its chip
     rule.onNodeWithText("Next trophy — 1 day").assertExists()
@@ -79,7 +81,7 @@ class OnboardingFlowTest {
     rule.onNodeWithText("Breathe in for four. Hold for four. Out for six.").assertExists()
     rule.onNodeWithText("I got through it").performClick()
     rule.waitUntil(5_000) { rule.onAllNodesWithTextExists("That is 1 this month", substring = true) }
-    rule.onNodeWithText("Today").assertExists()
+    rule.onAllNodesWithText("Today").onFirst().assertExists() // title and tab
 
     // The habit's detail: tabs, and a reason that the urge timer then shows.
     rule.onNodeWithText("Next trophy — 1 day").performClick()

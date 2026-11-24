@@ -1,16 +1,13 @@
 package app.quitter.ui.main
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Insights
-import androidx.compose.material.icons.filled.Redeem
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.Insights
-import androidx.compose.material.icons.outlined.Redeem
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
@@ -40,7 +36,8 @@ import app.quitter.QuitterApplication
 import app.quitter.R
 import app.quitter.ui.UserMessage
 import app.quitter.ui.home.HomeRoute
-import app.quitter.ui.placeholder.PlaceholderScreen
+import app.quitter.ui.insights.InsightsRoute
+import app.quitter.ui.trophies.TrophiesRoute
 
 enum class MainTab(
   @StringRes val label: Int,
@@ -48,9 +45,8 @@ enum class MainTab(
   val icon: ImageVector,
   val selectedIcon: ImageVector,
 ) {
-  Habits(R.string.tab_habits, R.string.home_title_today, Icons.Outlined.CheckCircle, Icons.Filled.CheckCircle),
-  Rewards(R.string.tab_rewards, R.string.tab_rewards, Icons.Outlined.Redeem, Icons.Filled.Redeem),
-  Trophies(R.string.tab_trophies, R.string.title_trophy_room, Icons.Outlined.EmojiEvents, Icons.Filled.EmojiEvents),
+  Today(R.string.home_title_today, R.string.home_title_today, Icons.Outlined.CheckCircle, Icons.Filled.CheckCircle),
+  Trophies(R.string.tab_trophies, R.string.tab_trophies, Icons.Outlined.EmojiEvents, Icons.Filled.EmojiEvents),
   Insights(R.string.tab_insights, R.string.tab_insights, Icons.Outlined.Insights, Icons.Filled.Insights),
 }
 
@@ -66,7 +62,7 @@ interface MainActions {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTabs(actions: MainActions) {
-  var tab by rememberSaveable { mutableStateOf(MainTab.Habits) }
+  var tab by rememberSaveable { mutableStateOf(MainTab.Today) }
   val colors = MaterialTheme.colorScheme
   val snackbarHostState = remember { SnackbarHostState() }
   val context = LocalContext.current
@@ -88,7 +84,7 @@ fun MainTabs(actions: MainActions) {
       TopAppBar(
         title = { Text(stringResource(tab.title)) },
         actions = {
-          if (tab == MainTab.Habits) {
+          if (tab == MainTab.Today) {
             IconButton(onClick = actions::openSettings) {
               Icon(Icons.Outlined.Settings, stringResource(R.string.title_settings), tint = colors.onSurfaceVariant)
             }
@@ -111,7 +107,7 @@ fun MainTabs(actions: MainActions) {
     },
   ) { padding ->
     when (tab) {
-      MainTab.Habits -> HomeRoute(
+      MainTab.Today -> HomeRoute(
         onAddHabit = actions::addHabit,
         onUrge = actions::urge,
         onOpenDetail = actions::openDetail,
@@ -119,9 +115,8 @@ fun MainTabs(actions: MainActions) {
         snackbarHostState = snackbarHostState,
         contentPadding = padding,
       )
-      else -> androidx.compose.foundation.layout.Box(Modifier.padding(padding)) {
-        PlaceholderScreen(stringResource(tab.title))
-      }
+      MainTab.Trophies -> TrophiesRoute(onAddHabit = actions::addHabit, contentPadding = padding)
+      MainTab.Insights -> InsightsRoute(onAddHabit = actions::addHabit, contentPadding = padding)
     }
   }
 }

@@ -1,5 +1,6 @@
 package app.quitter.ui.urge
 
+import app.quitter.ui.WriteError
 import androidx.lifecycle.SavedStateHandle
 import app.quitter.data.FakeHabitRepository
 import app.quitter.model.HabitDraft
@@ -92,5 +93,22 @@ class UrgeViewModelTest {
     val vm = vm(habit())
     backgroundScope.launch { vm.uiState.collect {} }
     assertEquals(null, vm.uiState.value.reason)
+  }
+
+  @Test fun aFailedSaveShowsAnErrorAndStaysOpen() = runTest(UnconfinedTestDispatcher()) {
+    val id = habit()
+    val vm = vm(id)
+    repository.failWrites = true
+    var done = 0
+    vm.gotThroughIt { done++ }
+    assertEquals(0, done)
+    assertEquals(WriteError.SaveUrge, vm.writeError.value)
+
+    // Trying again after the problem is gone works.
+    vm.dismissWriteError()
+    repository.failWrites = false
+    vm.gotThroughIt { done++ }
+    assertEquals(1, done)
+    assertEquals(1, repository.urges.size)
   }
 }

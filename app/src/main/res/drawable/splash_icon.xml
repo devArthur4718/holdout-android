@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Track: the full 220 degree arc, open at the bottom -->
+    <path
+        android:pathData="M31.447,71.304 A24,24 0 1 1 76.553,71.304"
+        android:strokeColor="#52FFFFFF"
+        android:strokeWidth="8.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <!-- Progress fill -->
+    <path
+        android:pathData="M31.447,71.304 A24,24 0 0 1 68.107,43.679"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="8.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <!-- Knob at the progress end -->
+    <path
+        android:pathData="M61.907,43.679 a6.2,6.2 0 1 0 12.4,0 a6.2,6.2 0 1 0 -12.4,0 Z"
+        android:fillColor="#FFFFFFFF" />
+</vector>

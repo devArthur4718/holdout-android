@@ -34,7 +34,7 @@ interface HabitDao {
   @Query("UPDATE habits SET kind = :kind, name = :name, costPerDay = :costPerDay, minutesPerDay = :minutesPerDay WHERE id = :id")
   suspend fun updateDetails(id: Long, kind: String, name: String, costPerDay: String?, minutesPerDay: Int?)
 
-  /** Its slips, urges and reasons go with it (foreign keys cascade). */
+  /** Its slips, urges, reasons and personal goals go with it (foreign keys cascade). */
   @Query("DELETE FROM habits WHERE id = :id")
   suspend fun delete(id: Long)
 
@@ -69,4 +69,21 @@ interface HabitDao {
 
   @Query("SELECT * FROM reasons WHERE habitId = :habitId ORDER BY createdAtMillis, id")
   suspend fun reasons(habitId: Long): List<ReasonEntity>
+
+  @Query("SELECT startedAtMillis FROM urges WHERE habitId = :habitId ORDER BY startedAtMillis")
+  fun observeUrgeStarts(habitId: Long): Flow<List<Long>>
+
+  @Insert suspend fun insert(goal: PersonalGoalEntity): Long
+
+  @Query("UPDATE personal_goals SET days = :days, name = :name WHERE id = :id")
+  suspend fun updatePersonalGoal(id: Long, days: Int, name: String?)
+
+  @Query("DELETE FROM personal_goals WHERE id = :id")
+  suspend fun deletePersonalGoal(id: Long)
+
+  @Query("SELECT * FROM personal_goals ORDER BY days")
+  fun observeAllPersonalGoals(): Flow<List<PersonalGoalEntity>>
+
+  @Query("SELECT * FROM personal_goals ORDER BY createdAtMillis, id")
+  suspend fun allPersonalGoals(): List<PersonalGoalEntity>
 }

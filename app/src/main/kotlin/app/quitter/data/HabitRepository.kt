@@ -4,6 +4,7 @@ import androidx.room.withTransaction
 import app.quitter.model.Habit
 import app.quitter.model.HabitDraft
 import app.quitter.model.HabitKind
+import app.quitter.model.PersonalGoal
 import java.math.BigDecimal
 import app.quitter.model.Reason
 import app.quitter.model.Slip
@@ -54,10 +55,22 @@ interface HabitRepository {
 
   suspend fun deleteReason(id: Long)
 
+  /** Start times of the habit's urges, oldest first, updated whenever they change. */
+  fun observeUrges(habitId: Long): Flow<List<Instant>>
+
+  /** Every habit's personal goals, fewest days first, updated whenever they change. */
+  fun observeAllPersonalGoals(): Flow<List<PersonalGoal>>
+
+  suspend fun addPersonalGoal(habitId: Long, days: Int, name: String?, at: Instant)
+
+  suspend fun updatePersonalGoal(id: Long, days: Int, name: String?)
+
+  suspend fun deletePersonalGoal(id: Long)
+
   /** Changes what can be edited after the start. When the user last did it can't change. */
   suspend fun updateDetails(id: Long, kind: HabitKind, name: String, costPerDay: BigDecimal?, minutesPerDay: Int?)
 
-  /** Deletes the habit with its slips, urges and reasons. */
+  /** Deletes the habit with its slips, urges, reasons and personal goals. */
   suspend fun delete(id: Long)
 
   /** Deletes everything the app has stored. */
@@ -107,6 +120,20 @@ class RoomHabitRepository(private val database: QuitterDatabase) : HabitReposito
 
   override suspend fun deleteReason(id: Long) = dao.deleteReason(id)
 
+  override fun observeUrges(habitId: Long): Flow<List<Instant>> =
+    dao.observeUrgeStarts(habitId).map { list -> list.map(Instant::ofEpochMilli) }
+
+  override fun observeAllPersonalGoals(): Flow<List<PersonalGoal>> =
+    dao.observeAllPersonalGoals().map { list -> list.map { it.toPersonalGoal() } }
+
+  override suspend fun addPersonalGoal(habitId: Long, days: Int, name: String?, at: Instant) {
+    dao.insert(PersonalGoalEntity(habitId = habitId, days = days, name = name, createdAtMillis = at.toEpochMilli()))
+  }
+
+  override suspend fun updatePersonalGoal(id: Long, days: Int, name: String?) = dao.updatePersonalGoal(id, days, name)
+
+  override suspend fun deletePersonalGoal(id: Long) = dao.deletePersonalGoal(id)
+
   override suspend fun updateDetails(id: Long, kind: HabitKind, name: String, costPerDay: BigDecimal?, minutesPerDay: Int?) =
     dao.updateDetails(id, kind.name, name, costPerDay?.toPlainString(), minutesPerDay)
 
@@ -116,6 +143,8 @@ class RoomHabitRepository(private val database: QuitterDatabase) : HabitReposito
   override suspend fun deleteAll() = withContext(Dispatchers.IO) { database.clearAllTables() }
 
   override suspend fun exportCsv(): String = database.withTransaction {
-    buildExportCsv(dao.allHabits().map { it.toHabit() }, dao.allSlips(), dao.allUrges(), dao.allReasons())
+    buildExportCsv(dao.allHabits().map { it.toHabit() }, dao.allSlips(), dao.allUrges(), dao.allReasons(), dao.allPersonalGoals())
   }
 }
+
+private fun PersonalGoalEntity.toPersonalGoal() = PersonalGoal(id, habitId, days, name, Instant.ofEpochMilli(createdAtMillis))

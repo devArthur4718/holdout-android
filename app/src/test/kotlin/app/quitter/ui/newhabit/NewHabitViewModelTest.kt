@@ -1,5 +1,6 @@
 package app.quitter.ui.newhabit
 
+import app.quitter.ui.WriteError
 import app.quitter.data.FakeHabitRepository
 import app.quitter.model.HabitKind
 import java.math.BigDecimal
@@ -135,5 +136,30 @@ class NewHabitViewModelTest {
     assertEquals("Red wine", habit.name)
     assertNull(habit.costPerDay)
     assertEquals(start, habit.lastDoneAt)
+  }
+
+  @Test fun aFailedSaveShowsAnErrorAndCanBeRetried() {
+    val vm = vm()
+    repository.failWrites = true
+    vm.start { error("must not be called") }
+    assertEquals(WriteError.SaveHabit, vm.writeError.value)
+    assertTrue(repository.habits.value.isEmpty())
+
+    vm.dismissWriteError()
+    assertNull(vm.writeError.value)
+    repository.failWrites = false
+    val ids = mutableListOf<Long>()
+    vm.start { ids += it }
+    assertEquals(listOf(1L), ids)
+  }
+
+  @Test fun aFailedEditShowsAnError() = kotlinx.coroutines.test.runTest(UnconfinedTestDispatcher()) {
+    val id = repository.add(app.quitter.model.HabitDraft(HabitKind.Alcohol, "Wine", now, null, null))
+    val vm = NewHabitViewModel(repository, defaultName = { it.name }, clock = clock, editingId = id)
+    vm.updateName("Red wine")
+    repository.failWrites = true
+    vm.start { error("must not be called") }
+    assertEquals(WriteError.SaveHabit, vm.writeError.value)
+    assertEquals("Wine", repository.habits.value.single().name)
   }
 }

@@ -18,8 +18,9 @@ import app.quitter.MainActivity
 import app.quitter.R
 import app.quitter.data.HabitRepository
 import app.quitter.model.Habit
-import app.quitter.model.isWholeYears
+import app.quitter.model.PersonalGoal
 import app.quitter.model.milestoneAlerts
+import app.quitter.ui.goalLabel
 import java.time.Clock
 import java.time.ZoneId
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +35,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 /**
- * A notification at each trophy. Each habit has one alarm, at its next milestone; when it goes off,
+ * A notification at each trophy (each step of the goal ladder). Each habit has one alarm, at its next goal; when it goes off,
  * the notification is posted and the following one is set. The user opts in; it's off by default.
  */
 class MilestoneNotifications(
@@ -58,23 +59,28 @@ class MilestoneNotifications(
   /** Keeps the alarms in step with the habits: any add, slip or delete moves them. */
   fun start(scope: CoroutineScope) {
     scope.launch {
-      combine(repository.observeAll(), enabled) { habits, on -> if (on) habits else emptyList() }
-        .collectLatest { schedule(it) }
+      combine(repository.observeAll(), repository.observeAllPersonalGoals(), enabled) { habits, goals, on ->
+        if (on) habits to goals else emptyList<Habit>() to emptyList()
+      }.collectLatest { (habits, goals) -> schedule(habits, goals) }
     }
   }
 
   suspend fun reschedule() {
-    schedule(if (enabled.value) repository.observeAll().first() else emptyList())
+    if (enabled.value) schedule(repository.observeAll().first(), repository.observeAllPersonalGoals().first())
+    else schedule(emptyList(), emptyList())
   }
 
   /** An alarm went off. Posts unless the streak was reset since the alarm was set. */
   suspend fun onAlarm(habitId: Long, days: Int, lastDoneAtMillis: Long) {
     val habit = repository.observe(habitId).first()
-    if (enabled.value && habit != null && habit.lastDoneAt.toEpochMilli() == lastDoneAtMillis) post(habit, days)
+    if (enabled.value && habit != null && habit.lastDoneAt.toEpochMilli() == lastDoneAtMillis) {
+      val personal = repository.observeAllPersonalGoals().first().firstOrNull { it.habitId == habitId && it.days == days }
+      post(habit, days, personal)
+    }
     reschedule()
   }
 
-  private suspend fun schedule(habits: List<Habit>) = lock.withLock {
+  private suspend fun schedule(habits: List<Habit>, goals: List<PersonalGoal>) = lock.withLock {
     val alarms = context.getSystemService(AlarmManager::class.java)
     prefs.getStringSet(KEY_SCHEDULED, emptySet()).orEmpty().forEach { id ->
       alarms.cancel(alarmIntent(id.toLong(), days = 0, lastDoneAtMillis = 0))
@@ -82,7 +88,7 @@ class MilestoneNotifications(
     val now = clock.instant()
     val zone = ZoneId.systemDefault()
     habits.forEach { habit ->
-      val next = habit.milestoneAlerts(now, zone, count = 1).first()
+      val next = habit.milestoneAlerts(now, zone, count = 1, personal = goals.filter { it.habitId == habit.id }).first()
       // Not exact: Android may hold it a few minutes to save battery, which is fine for this.
       alarms.setAndAllowWhileIdle(
         AlarmManager.RTC_WAKEUP,
@@ -104,14 +110,13 @@ class MilestoneNotifications(
     return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
   }
 
-  private fun post(habit: Habit, days: Int) {
+  /** Title "Smoke-free for 1 week"; a personal goal is named by its name when it has one. */
+  private fun post(habit: Habit, days: Int, personal: PersonalGoal?) {
     if (Build.VERSION.SDK_INT >= 33 &&
       ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     ) return
     createChannel()
-    val res = context.resources
-    val length = if (isWholeYears(days)) res.getQuantityString(R.plurals.years, days / 365, days / 365)
-    else res.getQuantityString(R.plurals.days, days, days)
+    val goal = personal?.name ?: context.resources.goalLabel(days)
     val open = PendingIntent.getActivity(
       context, 0,
       Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
@@ -119,8 +124,8 @@ class MilestoneNotifications(
     )
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
       .setSmallIcon(R.drawable.ic_stat_trophy)
-      .setContentTitle("${context.getString(habit.kind.freeFor)} $length")
-      .setContentText(context.getString(R.string.milestone_body, habit.name))
+      .setContentTitle("${context.getString(habit.kind.freeFor)} $goal")
+      .setContentText(context.getString(R.string.milestone_body, habit.name, goal))
       .setContentIntent(open)
       .setAutoCancel(true)
       .build()

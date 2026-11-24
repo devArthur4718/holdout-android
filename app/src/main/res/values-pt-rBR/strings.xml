@@ -1,17 +1,17 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_language">pt</string>
 
     <string name="action_back">Voltar</string>
     <string name="action_save">Salvar</string>
-    <string name="action_delete">Excluir</string>
+    <string name="action_delete">Apagar</string>
     <string name="action_next">Avançar</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancelar</string>
 
     <string name="welcome_title">Um contador.\nÉ só essa a ideia.</string>
-    <string name="welcome_body">O Quitter conta o tempo desde a última vez que você fez aquilo — e transforma isso em dinheiro guardado e horas de volta. Sem conta. Seus dados ficam no aparelho.</string>
-    <string name="welcome_benefit_savings">O custo e o tempo que você gastaria viram economia ao vivo</string>
-    <string name="welcome_benefit_trophies">Troféus a cada marco de horas e dias</string>
+    <string name="welcome_body">O Quitter mostra há quanto tempo você não faz isso, o dinheiro que deixou de gastar e o tempo que ganhou de volta. Sem conta. Seus dados ficam no aparelho.</string>
+    <string name="welcome_benefit_savings">Veja o dinheiro e o tempo que você deixou de gastar se somando, ao vivo</string>
+    <string name="welcome_benefit_trophies">Um troféu a cada meta: 1 dia, 1 semana, 30 dias, 6 meses, 1 ano…</string>
     <string name="welcome_benefit_ads">Grátis para sempre, mantido por anúncios — nunca nas telas de recaída</string>
     <string name="welcome_benefit_free">Grátis, sem anúncios e sem cadastro</string>
     <string name="welcome_add_habit">Adicionar meu primeiro hábito</string>
@@ -33,7 +33,7 @@
     <string name="new_habit_pick_date">Escolher data e hora</string>
     <string name="new_habit_cost_per_day">Custo / dia</string>
     <string name="new_habit_time_per_day">Tempo / dia</string>
-    <string name="new_habit_minutes_too_high">Máx. 1440</string>
+    <string name="new_habit_minutes_too_high">Um dia tem só %s minutos.</string>
     <string name="unit_minutes">min</string>
     <string name="new_habit_projection_both">Nesse ritmo, em um ano você terá guardado %1$s e ganhado %2$s de volta.</string>
     <string name="new_habit_projection_money">Nesse ritmo, em um ano você terá guardado %1$s.</string>
@@ -56,7 +56,9 @@
     </plurals>
 
     <string name="counter_running_title">Seu contador está rodando</string>
-    <string name="counter_running_body">A partir de agora, cada minuto conta. O primeiro troféu chega em 24 horas.</string>
+    <string name="counter_running_body">A partir de agora, cada minuto conta. Seu primeiro troféu chega ao completar %s.</string>
+    <string name="counter_past_title">Você já está a caminho</string>
+    <string name="counter_past_body">O tempo desde que você parou já conta. Seu próximo troféu chega ao completar %s.</string>
     <string name="counter_go_to_habits">Ir para meus hábitos</string>
     <string name="counter_ads_note">O Quitter é grátis e mantido por anúncios. Nunca há anúncios durante vontades ou recaídas.</string>
 
@@ -95,11 +97,8 @@
     <string name="home_checkin_title">Check-in da noite</string>
     <string name="home_checkin_subtitle">Um minuto, uma vez por dia</string>
 
-    <string name="tab_habits">Hábitos</string>
-    <string name="tab_rewards">Recompensas</string>
     <string name="tab_trophies">Troféus</string>
     <string name="tab_insights">Análises</string>
-    <string name="title_trophy_room">Sala de troféus</string>
     <string name="title_settings">Configurações</string>
     <string name="coming_soon">Em breve</string>
 
@@ -161,12 +160,13 @@
     <string name="detail_day_future">ainda não</string>
     <string name="detail_reasons_empty">Por que você quer parar? Escreva com suas palavras. Você vai ver isso quando a vontade bater.</string>
     <string name="detail_add_reason">Adicionar um motivo</string>
+    <string name="detail_delete_reason">Apagar motivo</string>
     <string name="detail_edit_reason">Editar motivo</string>
     <string name="detail_reason_hint">ex.: quero ter fôlego para brincar com meus filhos</string>
     <string name="detail_urge_timer">Timer da vontade</string>
     <string name="detail_more">Mais opções</string>
-    <string name="detail_delete">Excluir hábito</string>
-    <string name="detail_delete_title">Excluir %s?</string>
+    <string name="detail_delete">Apagar hábito</string>
+    <string name="detail_delete_title">Apagar %s?</string>
     <string name="detail_delete_body">O contador, as recaídas, as vontades e os motivos serão apagados de vez. Não dá para desfazer.</string>
     <string name="edit_habit_title">Editar hábito</string>
 
@@ -194,7 +194,7 @@
         <item quantity="many">%d anos</item>
         <item quantity="other">%d anos</item>
     </plurals>
-    <string name="milestone_body">Mais um troféu para %s. Continue assim.</string>
+    <string name="milestone_body">%1$s: você completou %2$s. Mais um troféu — continue assim.</string>
     <string name="milestone_channel">Troféus</string>
     <string name="milestone_channel_detail">Uma notificação a cada marco, nunca à noite</string>
     <string name="counter_notify">Avise-me a cada troféu</string>
@@ -204,4 +204,83 @@
     <string name="settings_notifications_section">Notificações</string>
     <string name="settings_milestones">Notificações de troféus</string>
     <string name="settings_milestones_detail">Uma a cada marco, nunca à noite</string>
+
+    <!-- Goals and the progress arc -->
+    <plurals name="weeks">
+        <item quantity="one">%d semana</item>
+        <item quantity="many">%d semanas</item>
+        <item quantity="other">%d semanas</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">%d mês</item>
+        <item quantity="many">%d meses</item>
+        <item quantity="other">%d meses</item>
+    </plurals>
+    <string name="goal_year_and_half">1 ano e meio</string>
+    <!-- Only shown for 1 day or more, so "one" here is always 1 (never 0). -->
+    <plurals name="arc_days_label" tools:ignore="ImpliedQuantity">
+        <item quantity="one">dia</item>
+        <item quantity="many">dias</item>
+        <item quantity="other">dias</item>
+    </plurals>
+    <string name="arc_hours_minutes">%1$d h %2$d min</string>
+    <string name="arc_progress">%1$s do caminho até %2$s</string>
+    <string name="arc_join_two">%1$s e %2$s</string>
+    <string name="arc_join_three">%1$s, %2$s e %3$s</string>
+    <string name="arc_description">%1$s. %2$s.</string>
+
+    <!-- A database write that failed -->
+    <string name="error_save_habit">Não foi possível salvar o hábito</string>
+    <string name="error_log_slip">Não foi possível registrar a recaída</string>
+    <string name="error_log_slip_body">Seu contador não foi zerado. Tente de novo.</string>
+    <string name="error_save">Não foi possível salvar</string>
+    <string name="error_save_urge">Não foi possível salvar a vontade</string>
+    <string name="error_delete">Não foi possível apagar</string>
+    <string name="error_try_again">Tente de novo.</string>
+
+    <!-- Trophies and Insights tabs -->
+    <string name="trophies_empty">Adicione um hábito para começar a ganhar troféus.</string>
+    <string name="trophies_all">Todos os troféus</string>
+    <string name="trophy_next_tag">Próximo</string>
+    <string name="goal_add">Adicionar meta pessoal</string>
+    <string name="goal_new_title">Nova meta pessoal</string>
+    <string name="goal_edit_title">Editar meta pessoal</string>
+    <string name="goal_days_label">Dias</string>
+    <string name="goal_days_hint">ex.: 45</string>
+    <string name="goal_name_label">Nome (opcional)</string>
+    <string name="goal_name_hint">ex.: Viagem à praia</string>
+    <string name="goal_error_days">Digite um número de dias de 1 a %s.</string>
+    <string name="goal_error_duplicate">Já existe um troféu em %s.</string>
+    <string name="goal_delete">Apagar meta</string>
+    <string name="goal_delete_title">Apagar esta meta?</string>
+    <string name="trophy_a11y_earned">%1$s, conquistado em %2$s</string>
+    <string name="trophy_a11y_not_earned">%s, ainda não conquistado</string>
+    <string name="trophy_a11y_personal">Meta pessoal: %s</string>
+    <string name="insights_empty">Adicione um hábito para ver quando é mais difícil e como suas sequências se somam.</string>
+    <string name="insights_hardest_title">Quando é mais difícil</string>
+    <string name="insights_time_of_day">Hora do dia</string>
+    <string name="insights_weekday">Dia da semana</string>
+    <string name="time_morning">Manhã</string>
+    <string name="time_afternoon">Tarde</string>
+    <string name="time_evening">Noite</string>
+    <string name="time_night">Madrugada</string>
+    <string name="insights_slips">Recaídas</string>
+    <string name="insights_urges">Vontades</string>
+    <string name="insights_hardest_time">Seu momento mais difícil: %s</string>
+    <string name="insights_not_enough">Ainda não há dados suficientes — isto se preenche conforme você registra recaídas e vontades.</string>
+    <string name="insights_streaks_title">Histórico de sequências</string>
+    <string name="streak_current">Atual</string>
+    <string name="streak_best">Melhor</string>
+    <string name="streak_since">Desde %s</string>
+    <string name="streak_only_current">Sequências anteriores aparecem aqui depois de uma recaída.</string>
+    <plurals name="slips_count">
+        <item quantity="one">%d recaída</item>
+        <item quantity="many">%d recaídas</item>
+        <item quantity="other">%d recaídas</item>
+    </plurals>
+    <plurals name="urges_count">
+        <item quantity="one">%d vontade</item>
+        <item quantity="many">%d vontades</item>
+        <item quantity="other">%d vontades</item>
+    </plurals>
 </resources>

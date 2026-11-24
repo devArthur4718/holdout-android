@@ -7,8 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -98,8 +98,10 @@ import app.quitter.model.progressAt
 import app.quitter.model.savingsByMonth
 import app.quitter.model.trackingSince
 import app.quitter.ui.UserMessage
+import app.quitter.ui.WriteErrorDialog
 import app.quitter.ui.clockTicker
-import app.quitter.ui.home.ElapsedText
+import app.quitter.ui.ProgressArc
+import app.quitter.ui.ProgressArcSize
 import app.quitter.ui.home.LogSlipSheet
 import app.quitter.ui.home.isWorthMentioning
 import app.quitter.ui.home.streakLength
@@ -126,6 +128,8 @@ fun HabitDetailRoute(habitId: Long, onBack: () -> Unit, onUrge: () -> Unit, onEd
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val snackbarHostState = remember { SnackbarHostState() }
   var slipSheetOpen by rememberSaveable { mutableStateOf(false) }
+  val writeError by viewModel.writeError.collectAsStateWithLifecycle()
+  WriteErrorDialog(writeError, onDismiss = viewModel::dismissWriteError)
 
   LaunchedEffect(viewModel) {
     viewModel.events.collect { event ->
@@ -256,12 +260,10 @@ fun HabitDetailScreen(
           color = colors.onSurfaceVariant,
         )
       }
-      ElapsedText(
-        state.progress.elapsedSeconds,
-        color = colors.primary,
-        daysSize = 46.sp,
-        partSize = 26.sp,
-        textAlign = TextAlign.Start,
+      ProgressArc(
+        goal = state.progress.goal,
+        size = ProgressArcSize.Large,
+        modifier = Modifier.fillMaxWidth(),
       )
       PrimaryTabRow(selectedTabIndex = state.tab.ordinal, containerColor = colors.background) {
         DetailTab.entries.forEach { tab ->
@@ -608,10 +610,11 @@ private fun ReasonDialog(initial: String, isNew: Boolean, onSave: (String) -> Un
       TextButton(onClick = { onSave(text) }, enabled = text.isNotBlank()) { Text(stringResource(R.string.action_save)) }
     },
     dismissButton = {
-      Row {
+      // Wraps at large font sizes instead of pushing a button off the dialog.
+      FlowRow(horizontalArrangement = Arrangement.End) {
         if (!isNew) {
           TextButton(onClick = onDelete) {
-            Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error)
+            Text(stringResource(R.string.detail_delete_reason), color = MaterialTheme.colorScheme.error)
           }
         }
         TextButton(onClick = onDismiss) { Text(stringResource(R.string.slip_cancel)) }

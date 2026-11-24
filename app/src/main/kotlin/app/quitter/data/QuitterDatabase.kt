@@ -7,8 +7,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-  entities = [HabitEntity::class, SlipEntity::class, UrgeEntity::class, ReasonEntity::class],
-  version = 4,
+  entities = [HabitEntity::class, SlipEntity::class, UrgeEntity::class, ReasonEntity::class, PersonalGoalEntity::class],
+  version = 5,
   autoMigrations = [
     // 2: streak columns on habits and the slips table.
     AutoMigration(from = 1, to = 2),
@@ -16,6 +16,8 @@ import androidx.room.RoomDatabase
     AutoMigration(from = 2, to = 3),
     // 4: the reasons table.
     AutoMigration(from = 3, to = 4),
+    // 5: the personal_goals table.
+    AutoMigration(from = 4, to = 5),
   ],
 )
 abstract class QuitterDatabase : RoomDatabase() {

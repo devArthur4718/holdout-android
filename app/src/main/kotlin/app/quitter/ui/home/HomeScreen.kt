@@ -3,6 +3,7 @@ package app.quitter.ui.home
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +36,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -52,16 +52,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,7 +71,11 @@ import app.quitter.model.Habit
 import app.quitter.model.HabitKind
 import app.quitter.model.HabitProgress
 import app.quitter.model.progressAt
+import app.quitter.ui.ProgressArc
+import app.quitter.ui.ProgressArcSize
+import app.quitter.ui.WriteErrorDialog
 import app.quitter.ui.clockTicker
+import app.quitter.ui.goalName
 import app.quitter.ui.theme.QuitterTheme
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -97,6 +97,8 @@ fun HomeRoute(
     HomeViewModel(app.habitRepository, clockTicker(), createSavedStateHandle())
   }
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val writeError by viewModel.writeError.collectAsStateWithLifecycle()
+  WriteErrorDialog(writeError, onDismiss = viewModel::dismissWriteError)
   /** The habit whose slip sheet is open, if any. */
   var slipFor by rememberSaveable { mutableStateOf<Long?>(null) }
 
@@ -116,7 +118,12 @@ fun HomeRoute(
 
   when (val state = uiState) {
     HomeUiState.Loading -> Box(Modifier.fillMaxSize())
-    HomeUiState.Empty -> EmptyHome(onAddHabit, contentPadding)
+    HomeUiState.Empty -> EmptyTab(
+      title = stringResource(R.string.home_empty_title),
+      body = stringResource(R.string.home_empty_body),
+      onAddHabit = onAddHabit,
+      contentPadding = contentPadding,
+    )
     is HomeUiState.Ready -> {
       HomeScreen(
         state = state,
@@ -160,7 +167,7 @@ fun HomeScreen(
       .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
-    HabitChips(state, onSelect, onAddHabit)
+    HabitChipRow(state.chips, state.selected.id, onSelect, onAddHabit)
     CounterCard(state.selected, state.progress, onUrge, onLogSlip)
     StatTiles(state.progress)
     NextTrophyCard(state.progress, onClick = onOpenDetail)
@@ -168,8 +175,9 @@ fun HomeScreen(
   }
 }
 
+/** A tab with no habit to show: a line or two and the "Add habit" button. */
 @Composable
-private fun EmptyHome(onAddHabit: () -> Unit, contentPadding: PaddingValues) {
+fun EmptyTab(title: String?, body: String, onAddHabit: () -> Unit, contentPadding: PaddingValues) {
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -178,9 +186,9 @@ private fun EmptyHome(onAddHabit: () -> Unit, contentPadding: PaddingValues) {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
   ) {
-    Text(stringResource(R.string.home_empty_title), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+    if (title != null) Text(title, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
     Text(
-      stringResource(R.string.home_empty_body),
+      body,
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
       textAlign = TextAlign.Center,
@@ -192,17 +200,18 @@ private fun EmptyHome(onAddHabit: () -> Unit, contentPadding: PaddingValues) {
   }
 }
 
+/** One chip per habit; [onAddHabit] adds the "+" button at the end (only on Today). */
 @Composable
-private fun HabitChips(state: HomeUiState.Ready, onSelect: (Long) -> Unit, onAddHabit: () -> Unit) {
+fun HabitChipRow(chips: List<HabitChip>, selectedId: Long, onSelect: (Long) -> Unit, onAddHabit: (() -> Unit)? = null) {
   val colors = MaterialTheme.colorScheme
   Row(
     modifier = Modifier.horizontalScroll(rememberScrollState()),
     horizontalArrangement = Arrangement.spacedBy(8.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    state.chips.forEach { chip ->
+    chips.forEach { chip ->
       FilterChip(
-        selected = chip.id == state.selected.id,
+        selected = chip.id == selectedId,
         onClick = { onSelect(chip.id) },
         label = { Text(chip.name, style = MaterialTheme.typography.labelLarge.copy(fontSize = 14.sp)) },
         colors = FilterChipDefaults.filterChipColors(
@@ -212,12 +221,24 @@ private fun HabitChips(state: HomeUiState.Ready, onSelect: (Long) -> Unit, onAdd
         ),
       )
     }
-    OutlinedIconButton(
-      onClick = onAddHabit,
-      shape = RoundedCornerShape(8.dp),
-      modifier = Modifier.size(32.dp),
+    if (onAddHabit == null) return@Row
+    // A small square to look at, a 48dp target to tap.
+    val addHabit = stringResource(R.string.home_add_habit)
+    Box(
+      modifier = Modifier
+        .size(48.dp)
+        .clickable(role = Role.Button, onClick = onAddHabit)
+        .semantics { contentDescription = addHabit },
+      contentAlignment = Alignment.Center,
     ) {
-      Icon(Icons.Rounded.Add, stringResource(R.string.home_add_habit), Modifier.size(18.dp), tint = colors.onSurfaceVariant)
+      Box(
+        modifier = Modifier
+          .size(32.dp)
+          .border(1.dp, colors.outline, RoundedCornerShape(8.dp)),
+        contentAlignment = Alignment.Center,
+      ) {
+        Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.size(18.dp), tint = colors.onSurfaceVariant)
+      }
     }
   }
 }
@@ -239,7 +260,14 @@ private fun CounterCard(habit: Habit, progress: HabitProgress, onUrge: () -> Uni
       color = colors.onPrimaryContainer,
       modifier = Modifier.semantics { heading() },
     )
-    ElapsedText(progress.elapsedSeconds)
+    ProgressArc(
+      goal = progress.goal,
+      size = ProgressArcSize.Compact,
+      modifier = Modifier.padding(vertical = 6.dp),
+      trackColor = colors.onPrimaryContainer.copy(alpha = 0.12f),
+      contentColor = colors.onPrimaryContainer,
+      secondaryColor = colors.onPrimaryContainer.copy(alpha = 0.85f),
+    )
     Text(
       text = if (progress.isPersonalBest || !progress.bestSeconds.isWorthMentioning()) {
         stringResource(R.string.home_personal_best_current)
@@ -268,45 +296,6 @@ private fun CounterCard(habit: Habit, progress: HabitProgress, onUrge: () -> Uni
       }
     }
   }
-}
-
-/** "18d 06h 42m 10s", with the days large. Read aloud as "18 days, 6 hours, 42 minutes". */
-@Composable
-internal fun ElapsedText(
-  totalSeconds: Long,
-  color: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onPrimaryContainer,
-  daysSize: androidx.compose.ui.unit.TextUnit = 56.sp,
-  partSize: androidx.compose.ui.unit.TextUnit = 30.sp,
-  textAlign: TextAlign = TextAlign.Center,
-) {
-  val d = totalSeconds / 86_400
-  val h = totalSeconds / 3_600 % 24
-  val m = totalSeconds / 60 % 60
-  val s = totalSeconds % 60
-  val unit = SpanStyle(fontFamily = FontFamily.Default, fontSize = 17.sp, fontWeight = FontWeight.Normal)
-  val small = SpanStyle(fontSize = partSize)
-  val text = buildAnnotatedString {
-    withStyle(SpanStyle(fontSize = daysSize, fontWeight = FontWeight.Medium, letterSpacing = (-2).sp)) { append("$d") }
-    withStyle(unit) { append("d  ") }
-    withStyle(small) { append("%02d".format(h)) }
-    withStyle(unit) { append("h  ") }
-    withStyle(small) { append("%02d".format(m)) }
-    withStyle(unit) { append("m  ") }
-    withStyle(small) { append("%02d".format(s)) }
-    withStyle(unit) { append("s") }
-  }
-  val spoken = listOf(
-    pluralStringResource(R.plurals.days, d.toInt(), d.toInt()),
-    pluralStringResource(R.plurals.hours, h.toInt(), h.toInt()),
-    pluralStringResource(R.plurals.minutes, m.toInt(), m.toInt()),
-  ).joinToString(", ")
-  Text(
-    text = text,
-    fontFamily = FontFamily.Monospace,
-    color = color,
-    textAlign = textAlign,
-    modifier = Modifier.clearAndSetSemantics { contentDescription = spoken },
-  )
 }
 
 @Composable
@@ -344,14 +333,13 @@ private fun StatTile(icon: ImageVector, value: String, @StringRes label: Int, mo
 @Composable
 private fun NextTrophyCard(progress: HabitProgress, onClick: () -> Unit) {
   val colors = MaterialTheme.colorScheme
-  val days = progress.nextMilestoneDays
+  val goal = progress.goal
   Column(
     modifier = Modifier
       .fillMaxWidth()
       .background(colors.surfaceContainer, MaterialTheme.shapes.medium)
       .clickable(onClick = onClick)
       .padding(16.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
     FlowRow(
       modifier = Modifier.fillMaxWidth(),
@@ -360,31 +348,17 @@ private fun NextTrophyCard(progress: HabitProgress, onClick: () -> Unit) {
       itemVerticalAlignment = Alignment.CenterVertically,
     ) {
       Text(
-        stringResource(R.string.home_next_trophy, pluralStringResource(R.plurals.days, days, days)),
+        stringResource(R.string.home_next_trophy, LocalResources.current.goalName(goal.goalDays, goal.personal)),
         style = MaterialTheme.typography.titleSmall,
         color = colors.onSurface,
       )
-      Text(timeToGo(progress.secondsToNextMilestone), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-    }
-    Box(
-      Modifier
-        .fillMaxWidth()
-        .height(8.dp)
-        .background(colors.outlineVariant, RoundedCornerShape(4.dp)),
-    ) {
-      // A sliver stays visible even right after a milestone, so the bar never looks empty.
-      Box(
-        Modifier
-          .fillMaxWidth(progress.milestoneFraction.coerceAtLeast(0.04f))
-          .fillMaxHeight()
-          .background(colors.primary, RoundedCornerShape(4.dp)),
-      )
+      Text(timeToGo(goal.secondsToGoal), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
     }
   }
 }
 
 @Composable
-private fun timeToGo(seconds: Long): String = when {
+internal fun timeToGo(seconds: Long): String = when {
   seconds >= 86_400 -> ((seconds + 86_399) / 86_400).toInt().let { pluralStringResource(R.plurals.days_to_go, it, it) }
   seconds >= 3_600 -> ((seconds + 3_599) / 3_600).toInt().let { pluralStringResource(R.plurals.hours_to_go, it, it) }
   else -> ((seconds + 59) / 60).toInt().coerceAtLeast(1).let { pluralStringResource(R.plurals.minutes_to_go, it, it) }

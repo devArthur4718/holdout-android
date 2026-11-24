@@ -79,6 +79,35 @@ class MigrationTest {
     }
   }
 
+  @Test fun version4DataSurvivesAndPersonalGoalsStartEmpty() {
+    helper.createDatabase(DB, 4).use { db ->
+      db.execSQL(
+        "INSERT INTO habits (id, kind, name, lastDoneAtMillis, costPerDay, minutesPerDay, bestSeconds, bankedSeconds) " +
+          "VALUES (1, 'Smoking', 'Cigarettes', 1700000000000, NULL, NULL, 0, 0)",
+      )
+      db.execSQL("INSERT INTO reasons (habitId, text, createdAtMillis) VALUES (1, 'For my lungs', 1700000000000)")
+    }
+
+    helper.runMigrationsAndValidate(DB, 5, true).use { db ->
+      db.query("SELECT text FROM reasons").use { c ->
+        c.moveToFirst()
+        assertEquals("For my lungs", c.getString(0))
+      }
+      db.query("SELECT COUNT(*) FROM personal_goals").use { c ->
+        c.moveToFirst()
+        assertEquals(0, c.getInt(0))
+      }
+      db.execSQL("INSERT INTO personal_goals (habitId, days, name, createdAtMillis) VALUES (1, 45, 'Beach trip', 1700000000000)")
+      // Goals go with their habit.
+      db.execSQL("PRAGMA foreign_keys = ON")
+      db.execSQL("DELETE FROM habits")
+      db.query("SELECT COUNT(*) FROM personal_goals").use { c ->
+        c.moveToFirst()
+        assertEquals(0, c.getInt(0))
+      }
+    }
+  }
+
   private companion object {
     const val DB = "migration-test"
   }

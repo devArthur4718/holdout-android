@@ -24,21 +24,36 @@ class HabitProgressTest {
     assertNull(p.hoursBack)
   }
 
-  @Test fun firstTrophyIsOneDay() {
+  @Test fun firstGoalIsOneDayAndTheArcFillsFromTheQuitMoment() {
     val p = habit().progressAt(days(0.5))
-    assertEquals(1, p.nextMilestoneDays)
-    assertEquals(43_200L, p.secondsToNextMilestone)
-    assertEquals(0.5f, p.milestoneFraction, 0.001f)
+    assertEquals(1, p.goal.goalDays)
+    assertEquals(0, p.goal.previousGoalDays)
+    assertEquals(43_200L, p.goal.secondsToGoal)
+    assertEquals(0.5f, p.goal.fraction, 0.001f)
+
+    val week = habit().progressAt(days(3.5))
+    assertEquals(7, week.goal.goalDays)
+    assertEquals(1, week.goal.previousGoalDays)
+    assertEquals(0.5f, week.goal.fraction, 0.001f)
   }
 
-  @Test fun progressIsMeasuredBetweenMilestones() {
-    val p = habit().progressAt(days(10.5)) // between 7 and 14
-    assertEquals(14, p.nextMilestoneDays)
-    assertEquals(0.5f, p.milestoneFraction, 0.001f)
+  @Test fun personalGoalsShapeTheArc() {
+    val goal = PersonalGoal(1, 1, 45, "Beach trip", start)
+    val p = habit().progressAt(days(31.0), listOf(goal))
+    assertEquals(45, p.goal.goalDays)
+    assertEquals("Beach trip", p.goal.personal?.name)
   }
 
-  @Test fun afterAYearATrophyLandsEveryYear() {
-    assertEquals(730, habit().progressAt(days(400.0)).nextMilestoneDays)
+  @Test fun progressCountsFromZeroNotFromThePreviousGoal() {
+    val p = habit().progressAt(days(15.0)) // past 7, towards 30
+    assertEquals(30, p.goal.goalDays)
+    assertEquals(7, p.goal.previousGoalDays)
+    assertEquals(0.5f, p.goal.fraction, 0.001f)
+    assertEquals(50, p.goal.percent)
+  }
+
+  @Test fun afterTwoYearsAGoalLandsEveryYear() {
+    assertEquals(1095, habit().progressAt(days(755.0)).goal.goalDays)
   }
 
   @Test fun futureLastDoneCountsAsZero() {

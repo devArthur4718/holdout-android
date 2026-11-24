@@ -63,6 +63,8 @@ import app.quitter.ui.theme.QuitterTheme
 import java.time.LocalDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.quitter.ui.WriteErrorDialog
 import kotlinx.coroutines.withContext
 
 @Composable
@@ -101,6 +103,9 @@ fun SettingsRoute(onBack: () -> Unit, onAllDeleted: () -> Unit) {
       if (result == SnackbarResult.ActionPerformed) notifications.openSystemSettings()
     }
   }
+
+  val writeError by viewModel.writeError.collectAsStateWithLifecycle()
+  WriteErrorDialog(writeError, onDismiss = viewModel::dismissWriteError)
 
   SettingsScreen(
     version = version,

@@ -9,9 +9,9 @@
     <string name="action_cancel">Cancelar</string>
 
     <string name="welcome_title">Un contador.\nEsa es toda la idea.</string>
-    <string name="welcome_body">Quitter cuenta el tiempo desde la última vez que lo hiciste — y lo convierte en dinero ahorrado y horas recuperadas. Sin cuenta. Tus datos se quedan en el dispositivo.</string>
-    <string name="welcome_benefit_savings">El dinero y el tiempo que solías gastar se vuelven ahorro en vivo</string>
-    <string name="welcome_benefit_trophies">Trofeos en cada hito de horas y días</string>
+    <string name="welcome_body">Quitter muestra cuánto tiempo llevas sin hacerlo, el dinero que no gastaste y el tiempo que recuperaste. Sin cuenta. Tus datos se quedan en el dispositivo.</string>
+    <string name="welcome_benefit_savings">Mira cómo se suman, en vivo, el dinero y el tiempo que no gastaste</string>
+    <string name="welcome_benefit_trophies">Un trofeo en cada meta: 1 día, 1 semana, 30 días, 6 meses, 1 año…</string>
     <string name="welcome_benefit_ads">Gratis para siempre, con anuncios — nunca en las pantallas de recaída</string>
     <string name="welcome_benefit_free">Gratis, sin anuncios y sin registrarte</string>
     <string name="welcome_add_habit">Agregar mi primer hábito</string>
@@ -33,7 +33,7 @@
     <string name="new_habit_pick_date">Elegir fecha y hora</string>
     <string name="new_habit_cost_per_day">Costo / día</string>
     <string name="new_habit_time_per_day">Tiempo / día</string>
-    <string name="new_habit_minutes_too_high">Máx. 1440</string>
+    <string name="new_habit_minutes_too_high">Un día solo tiene %s minutos.</string>
     <string name="unit_minutes">min</string>
     <string name="new_habit_projection_both">A este ritmo, en un año habrás ahorrado %1$s y recuperado %2$s.</string>
     <string name="new_habit_projection_money">A este ritmo, en un año habrás ahorrado %1$s.</string>
@@ -56,7 +56,9 @@
     </plurals>
 
     <string name="counter_running_title">Tu contador está en marcha</string>
-    <string name="counter_running_body">Desde ahora, cada minuto cuenta. El primer trofeo llega a las 24 horas.</string>
+    <string name="counter_running_body">Desde ahora, cada minuto cuenta. Tu primer trofeo llega al cumplir %s.</string>
+    <string name="counter_past_title">Ya vas en camino</string>
+    <string name="counter_past_body">El tiempo desde que lo dejaste ya cuenta. Tu próximo trofeo llega al cumplir %s.</string>
     <string name="counter_go_to_habits">Ir a mis hábitos</string>
     <string name="counter_ads_note">Quitter es gratis y tiene anuncios. Nunca aparecen durante un antojo o una recaída.</string>
 
@@ -95,11 +97,8 @@
     <string name="home_checkin_title">Repaso de la noche</string>
     <string name="home_checkin_subtitle">Un minuto, una vez al día</string>
 
-    <string name="tab_habits">Hábitos</string>
-    <string name="tab_rewards">Premios</string>
     <string name="tab_trophies">Trofeos</string>
     <string name="tab_insights">Análisis</string>
-    <string name="title_trophy_room">Sala de trofeos</string>
     <string name="title_settings">Ajustes</string>
     <string name="coming_soon">Próximamente</string>
 
@@ -161,6 +160,7 @@
     <string name="detail_day_future">todavía no</string>
     <string name="detail_reasons_empty">¿Por qué lo quieres dejar? Escríbelo con tus palabras. Lo verás cuando llegue un antojo.</string>
     <string name="detail_add_reason">Agregar un motivo</string>
+    <string name="detail_delete_reason">Eliminar motivo</string>
     <string name="detail_edit_reason">Editar motivo</string>
     <string name="detail_reason_hint">p. ej.: quiero poder seguirles el ritmo a mis hijos</string>
     <string name="detail_urge_timer">Temporizador de antojo</string>
@@ -194,7 +194,7 @@
         <item quantity="many">%d años</item>
         <item quantity="other">%d años</item>
     </plurals>
-    <string name="milestone_body">Un trofeo más para %s. Sigue así.</string>
+    <string name="milestone_body">%1$s: cumpliste %2$s. Otro trofeo — sigue así.</string>
     <string name="milestone_channel">Trofeos</string>
     <string name="milestone_channel_detail">Una notificación en cada hito, nunca de noche</string>
     <string name="counter_notify">Avísame en cada trofeo</string>
@@ -204,4 +204,82 @@
     <string name="settings_notifications_section">Notificaciones</string>
     <string name="settings_milestones">Notificaciones de trofeos</string>
     <string name="settings_milestones_detail">Una en cada hito, nunca de noche</string>
+
+    <!-- Goals and the progress arc -->
+    <plurals name="weeks">
+        <item quantity="one">%d semana</item>
+        <item quantity="many">%d semanas</item>
+        <item quantity="other">%d semanas</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">%d mes</item>
+        <item quantity="many">%d meses</item>
+        <item quantity="other">%d meses</item>
+    </plurals>
+    <string name="goal_year_and_half">1 año y medio</string>
+    <plurals name="arc_days_label">
+        <item quantity="one">día</item>
+        <item quantity="many">días</item>
+        <item quantity="other">días</item>
+    </plurals>
+    <string name="arc_hours_minutes">%1$d h %2$d min</string>
+    <string name="arc_progress">%1$s del camino hacia %2$s</string>
+    <string name="arc_join_two">%1$s y %2$s</string>
+    <string name="arc_join_three">%1$s, %2$s y %3$s</string>
+    <string name="arc_description">%1$s. %2$s.</string>
+
+    <!-- A database write that failed -->
+    <string name="error_save_habit">No se pudo guardar el hábito</string>
+    <string name="error_log_slip">No se pudo registrar la recaída</string>
+    <string name="error_log_slip_body">Tu contador no se reinició. Inténtalo de nuevo.</string>
+    <string name="error_save">No se pudo guardar</string>
+    <string name="error_save_urge">No se pudo guardar el antojo</string>
+    <string name="error_delete">No se pudo borrar</string>
+    <string name="error_try_again">Inténtalo de nuevo.</string>
+
+    <!-- Trophies and Insights tabs -->
+    <string name="trophies_empty">Agrega un hábito para empezar a ganar trofeos.</string>
+    <string name="trophies_all">Todos los trofeos</string>
+    <string name="trophy_next_tag">Siguiente</string>
+    <string name="goal_add">Agregar meta personal</string>
+    <string name="goal_new_title">Nueva meta personal</string>
+    <string name="goal_edit_title">Editar meta personal</string>
+    <string name="goal_days_label">Días</string>
+    <string name="goal_days_hint">p. ej., 45</string>
+    <string name="goal_name_label">Nombre (opcional)</string>
+    <string name="goal_name_hint">p. ej., Viaje a la playa</string>
+    <string name="goal_error_days">Escribe un número de días del 1 al %s.</string>
+    <string name="goal_error_duplicate">Ya hay un trofeo en %s.</string>
+    <string name="goal_delete">Eliminar meta</string>
+    <string name="goal_delete_title">¿Eliminar esta meta?</string>
+    <string name="trophy_a11y_earned">%1$s, conseguido el %2$s</string>
+    <string name="trophy_a11y_not_earned">%s, aún no conseguido</string>
+    <string name="trophy_a11y_personal">Meta personal: %s</string>
+    <string name="insights_empty">Agrega un hábito para ver cuándo es más difícil y cómo se suman tus rachas.</string>
+    <string name="insights_hardest_title">Cuándo es más difícil</string>
+    <string name="insights_time_of_day">Momento del día</string>
+    <string name="insights_weekday">Día de la semana</string>
+    <string name="time_morning">Mañana</string>
+    <string name="time_afternoon">Tarde</string>
+    <string name="time_evening">Noche</string>
+    <string name="time_night">Madrugada</string>
+    <string name="insights_slips">Recaídas</string>
+    <string name="insights_urges">Antojos</string>
+    <string name="insights_hardest_time">Tu momento más difícil: %s</string>
+    <string name="insights_not_enough">Todavía no hay suficientes datos — esto se completa a medida que registras recaídas y antojos.</string>
+    <string name="insights_streaks_title">Historial de rachas</string>
+    <string name="streak_current">Actual</string>
+    <string name="streak_best">Mejor</string>
+    <string name="streak_since">Desde el %s</string>
+    <string name="streak_only_current">Las rachas anteriores aparecen aquí después de una recaída.</string>
+    <plurals name="slips_count">
+        <item quantity="one">%d recaída</item>
+        <item quantity="many">%d recaídas</item>
+        <item quantity="other">%d recaídas</item>
+    </plurals>
+    <plurals name="urges_count">
+        <item quantity="one">%d antojo</item>
+        <item quantity="many">%d antojos</item>
+        <item quantity="other">%d antojos</item>
+    </plurals>
 </resources>

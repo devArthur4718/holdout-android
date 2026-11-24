@@ -49,8 +49,19 @@ class MilestoneNotificationsTest {
     app.milestones.onAlarm(id, days = 7, lastDoneAtMillis = habit.lastDoneAt.toEpochMilli())
 
     val posted = manager.activeNotifications.single()
-    assertEquals("Smoke-free for 7 days", posted.notification.extras.getString("android.title"))
-    assertEquals("Another trophy for Cigarettes. Keep going.", posted.notification.extras.getString("android.text"))
+    assertEquals("Smoke-free for 1 week", posted.notification.extras.getString("android.title"))
+    assertEquals("Cigarettes: you made it to 1 week. Another trophy — keep going.", posted.notification.extras.getString("android.text"))
+  }
+
+  @Test fun aPersonalGoalIsNamedInTheNotification() = runBlocking {
+    val id = addCigarettes()
+    val habit = app.habitRepository.observe(id).first()!!
+    app.habitRepository.addPersonalGoal(id, 5, "Beach trip", Instant.now())
+    app.milestones.onAlarm(id, days = 5, lastDoneAtMillis = habit.lastDoneAt.toEpochMilli())
+
+    val posted = manager.activeNotifications.single()
+    assertEquals("Smoke-free for Beach trip", posted.notification.extras.getString("android.title"))
+    assertEquals("Cigarettes: you made it to Beach trip. Another trophy — keep going.", posted.notification.extras.getString("android.text"))
   }
 
   @Test fun anAlarmFromBeforeASlipPostsNothing() = runBlocking {

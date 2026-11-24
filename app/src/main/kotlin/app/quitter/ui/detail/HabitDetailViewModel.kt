@@ -15,6 +15,8 @@ import app.quitter.model.calendarMonth
 import app.quitter.model.progressAt
 import app.quitter.model.savingsByMonth
 import app.quitter.model.trackingSince
+import app.quitter.ui.WriteError
+import app.quitter.ui.attempt
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.YearMonth
@@ -23,6 +25,8 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -78,14 +82,22 @@ class HabitDetailViewModel(
   private val _events = Channel<HabitDetailEvent>(Channel.BUFFERED)
   val events: Flow<HabitDetailEvent> = _events.receiveAsFlow()
 
+  private val _writeError = MutableStateFlow<WriteError?>(null)
+  /** A write failed: "Couldn't save". Nothing changed, so the user can try again. */
+  val writeError: StateFlow<WriteError?> = _writeError.asStateFlow()
+
+  fun dismissWriteError() {
+    _writeError.value = null
+  }
+
   val uiState: StateFlow<HabitDetailUiState> =
     combine(
       repository.observe(habitId),
       repository.observeSlips(habitId),
       repository.observeReasons(habitId),
-      combine(tab, month, ::Pair),
+      combine(tab, month, repository.observeAllPersonalGoals(), ::Triple),
       ticker,
-    ) { habit, slips, reasons, (tabName, monthText), time ->
+    ) { habit, slips, reasons, (tabName, monthText, goals), time ->
       if (habit == null) return@combine HabitDetailUiState.Gone
       val since = habit.trackingSince
       val first = YearMonth.from(since.atZone(zone))
@@ -94,7 +106,7 @@ class HabitDetailViewModel(
       HabitDetailUiState.Ready(
         habit = habit,
         trackingSince = since,
-        progress = habit.progressAt(time),
+        progress = habit.progressAt(time, goals.filter { it.habitId == habit.id }),
         tab = DetailTab.valueOf(tabName),
         savings = habit.savingsByMonth(time, zone),
         calendar = CalendarState(
@@ -124,31 +136,34 @@ class HabitDetailViewModel(
   /** Adds a reason; blank text is ignored and long text is cut to [REASON_MAX_LENGTH]. */
   fun addReason(text: String) {
     val clean = text.cleanReason() ?: return
-    viewModelScope.launch { repository.addReason(habitId, clean, now()) }
+    save { repository.addReason(habitId, clean, now()) }
   }
 
   /** Saves the new text, or deletes the reason if the text was cleared. */
   fun updateReason(id: Long, text: String) {
     val clean = text.cleanReason()
-    viewModelScope.launch {
-      if (clean == null) repository.deleteReason(id) else repository.updateReason(id, clean)
-    }
+    save { if (clean == null) repository.deleteReason(id) else repository.updateReason(id, clean) }
   }
 
   fun deleteReason(id: Long) {
-    viewModelScope.launch { repository.deleteReason(id) }
+    save { repository.deleteReason(id) }
   }
 
   fun logSlip(trigger: SlipTrigger?) {
     viewModelScope.launch {
-      val habit = repository.logSlip(habitId, now(), trigger) ?: return@launch
+      val habit = _writeError.attempt(WriteError.Save) { repository.logSlip(habitId, now(), trigger) } ?: return@launch
       _events.send(HabitDetailEvent.SlipLogged(habit.bestSeconds))
     }
   }
 
   /** Deletes the habit with its history. The screen then closes by itself (state becomes Gone). */
   fun deleteHabit() {
-    viewModelScope.launch { repository.delete(habitId) }
+    save { repository.delete(habitId) }
+  }
+
+  /** Every write here shows "Couldn't save" if it fails, as on iOS. */
+  private fun save(write: suspend () -> Unit) {
+    viewModelScope.launch { _writeError.attempt(WriteError.Save, write) }
   }
 
   private fun String.cleanReason(): String? = trim().take(REASON_MAX_LENGTH).ifEmpty { null }
