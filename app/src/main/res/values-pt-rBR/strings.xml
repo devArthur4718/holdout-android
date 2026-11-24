@@ -9,8 +9,7 @@
     <string name="action_cancel">Cancelar</string>
 
     <string name="welcome_title">Um contador.\nÉ só essa a ideia.</string>
-    <string name="welcome_body">O Quitter mostra há quanto tempo você não faz isso, o dinheiro que deixou de gastar e o tempo que ganhou de volta. Sem conta. Seus dados ficam no aparelho.</string>
-    <string name="welcome_benefit_savings">Veja o dinheiro e o tempo que você deixou de gastar se somando, ao vivo</string>
+    <string name="welcome_body">O Quitter é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio.</string>
     <string name="welcome_benefit_trophies">Um troféu a cada meta: 1 dia, 1 semana, 30 dias, 6 meses, 1 ano…</string>
     <string name="welcome_benefit_ads">Grátis para sempre, mantido por anúncios — nunca nas telas de recaída</string>
     <string name="welcome_benefit_free">Grátis, sem anúncios e sem cadastro</string>
@@ -32,6 +31,7 @@
     <string name="new_habit_just_now">Agora mesmo</string>
     <string name="new_habit_pick_date">Escolher data e hora</string>
     <string name="new_habit_cost_per_day">Custo / dia</string>
+    <string name="new_habit_cost_time_optional">Opcional. Deixe em branco se não se aplicar.</string>
     <string name="new_habit_time_per_day">Tempo / dia</string>
     <string name="new_habit_minutes_too_high">Um dia tem só %s minutos.</string>
     <string name="unit_minutes">min</string>

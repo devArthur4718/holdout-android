@@ -7,10 +7,10 @@ import org.junit.Test
 class WelcomeViewModelTest {
 
   @Test
-  fun uiState_listsTheThreeBenefitsInOrder() {
+  fun uiState_listsTheBenefitsInOrder() {
     val state = WelcomeViewModel().uiState.value
     assertEquals(
-      listOf(R.string.welcome_benefit_savings, R.string.welcome_benefit_trophies, R.string.welcome_benefit_free),
+      listOf(R.string.welcome_benefit_trophies, R.string.welcome_benefit_free),
       state.benefits.map { it.text },
     )
   }

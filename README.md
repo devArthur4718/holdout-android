@@ -131,7 +131,7 @@ app/schemas/          Room schema history (1.json … 6.json)
 
 ## Testing
 
-119 automated tests: 95 unit tests on the JVM and 24 on a device.
+120 automated tests: 96 unit tests on the JVM and 24 on a device.
 
 - **Domain rules** — progress and savings across slips, personal bests, calendar months, the savings chart, CSV escaping, the goal ladder (next and previous goal, personal goals and their checks, the arc's fraction, goal names), trophies (earned in any streak, the grid's cut-off, the next one) and notification timing (quiet hours, a goal reached at night, the whole ladder, yearly trophies, local time zones).
 - **ViewModels** — every screen's state and events against an in-memory fake repository, with injected clocks and tickers.

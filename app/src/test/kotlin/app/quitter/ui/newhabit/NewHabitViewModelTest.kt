@@ -101,6 +101,14 @@ class NewHabitViewModelTest {
     assertNull(draft.minutesPerDay)
   }
 
+  @Test fun costAndTimeAreOptional() {
+    val vm = vm()
+    assertTrue(vm.uiState.value.canStart)
+    val draft = vm.draft()!!
+    assertNull(draft.costPerDay)
+    assertNull(draft.minutesPerDay)
+  }
+
   @Test fun startSavesHabitOnceAndReportsItsId() {
     val vm = vm()
     val ids = mutableListOf<Long>()

@@ -11,8 +11,7 @@
     <string name="action_cancel">Cancel</string>
 
     <string name="welcome_title">One counter.\nThat\'s the whole idea.</string>
-    <string name="welcome_body">Quitter shows how long it\'s been since you last did it, the money you didn\'t spend and the time you got back. No account. Your data stays on the device.</string>
-    <string name="welcome_benefit_savings">See the money and time you didn\'t spend add up, live</string>
+    <string name="welcome_body">Quitter is a simple app to track your progress as you quit certain habits. Whether it\'s cigarettes, drinking or anything else, you can lean on this tool for some support: it\'s free, there\'s no account to sign up for, and all your data stays on your phone.</string>
     <string name="welcome_benefit_trophies">A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…</string>
     <string name="welcome_benefit_ads">Free forever, funded by ads — never on relapse screens</string>
     <string name="welcome_benefit_free">Free, with no ads and nothing to sign up for</string>
@@ -34,6 +33,7 @@
     <string name="new_habit_just_now">Just now</string>
     <string name="new_habit_pick_date">Pick date and time</string>
     <string name="new_habit_cost_per_day">Cost / day</string>
+    <string name="new_habit_cost_time_optional">Optional. Leave blank if it doesn\'t apply.</string>
     <string name="new_habit_time_per_day">Time / day</string>
     <string name="new_habit_minutes_too_high">A day only has %s minutes.</string>
     <string name="unit_minutes">min</string>

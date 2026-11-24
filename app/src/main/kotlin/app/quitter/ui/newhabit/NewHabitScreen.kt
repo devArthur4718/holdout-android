@@ -222,6 +222,14 @@ fun NewHabitScreen(
           modifier = Modifier.weight(1f),
         )
       }
+      if (!uiState.minutesTooHigh) {
+        Text(
+          stringResource(R.string.new_habit_cost_time_optional),
+          style = MaterialTheme.typography.bodySmall,
+          color = colors.onSurfaceVariant,
+          modifier = Modifier.padding(start = 4.dp),
+        )
+      }
 
       projectionText(uiState.yearlyCost, uiState.yearlyHours)?.let { text ->
         Surface(color = colors.surfaceContainer, shape = RoundedCornerShape(12.dp)) {

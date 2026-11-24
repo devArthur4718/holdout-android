@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Campaign
 import androidx.compose.material.icons.rounded.EmojiEvents
-import androidx.compose.material.icons.rounded.Savings
 import androidx.compose.material.icons.rounded.VolunteerActivism
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
@@ -25,7 +24,6 @@ class WelcomeViewModel : ViewModel() {
   private val _uiState = MutableStateFlow(
     WelcomeUiState(
       benefits = listOf(
-        Benefit(Icons.Rounded.Savings, R.string.welcome_benefit_savings),
         Benefit(Icons.Rounded.EmojiEvents, R.string.welcome_benefit_trophies),
         if (Features.ADS) {
           Benefit(Icons.Rounded.Campaign, R.string.welcome_benefit_ads)

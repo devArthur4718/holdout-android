@@ -23,7 +23,8 @@ class WelcomeScreenTest {
       QuitterTheme { WelcomeScreen(uiState = uiState, onAddHabit = { tapped = true }) }
     }
 
-    rule.onNodeWithText("See the money and time you didn't spend add up, live").assertExists()
+    rule.onNodeWithText("Quitter is a simple app", substring = true).assertExists()
+    rule.onNodeWithText("See the money and time you didn't spend add up, live").assertDoesNotExist()
     rule.onNodeWithText("A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…").assertExists()
     rule.onNodeWithText("Skip to the demo data").assertDoesNotExist()
     rule.onNodeWithText("Add my first habit").performClick()
