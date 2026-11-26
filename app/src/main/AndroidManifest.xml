@@ -8,17 +8,17 @@
 
     <application
         android:localeConfig="@xml/locales_config"
-        android:name=".QuitterApplication"
+        android:name=".HoldoutApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Quitter">
+        android:theme="@style/Theme.Holdout">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Quitter.Starting"
+            android:theme="@style/Theme.Holdout.Starting"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

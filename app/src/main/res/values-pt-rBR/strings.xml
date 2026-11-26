@@ -9,7 +9,7 @@
     <string name="action_cancel">Cancelar</string>
 
     <string name="welcome_title">Um contador.\nÉ só essa a ideia.</string>
-    <string name="welcome_body">O Quitter é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio.</string>
+    <string name="welcome_body">O Holdout é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio.</string>
     <string name="welcome_benefit_trophies">Um troféu a cada meta: 1 dia, 1 semana, 30 dias, 6 meses, 1 ano…</string>
     <string name="welcome_benefit_ads">Grátis para sempre, mantido por anúncios — nunca nas telas de recaída</string>
     <string name="welcome_benefit_free">Grátis, sem anúncios e sem cadastro</string>
@@ -60,7 +60,7 @@
     <string name="counter_past_title">Você já está a caminho</string>
     <string name="counter_past_body">O tempo desde que você parou já conta. Seu próximo troféu chega ao completar %s.</string>
     <string name="counter_go_to_habits">Ir para meus hábitos</string>
-    <string name="counter_ads_note">O Quitter é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída.</string>
+    <string name="counter_ads_note">O Holdout é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída.</string>
 
     <string name="free_for_smoking">Sem fumar há</string>
     <string name="free_for_alcohol">Sem álcool há</string>
@@ -181,7 +181,7 @@
     <string name="milestone_channel_detail">Uma notificação a cada marco, nunca à noite</string>
     <string name="counter_notify">Avise-me a cada troféu</string>
     <string name="counter_notify_on">Você vai receber uma notificação a cada troféu.</string>
-    <string name="notifications_blocked">As notificações do Quitter estão desativadas.</string>
+    <string name="notifications_blocked">As notificações do Holdout estão desativadas.</string>
     <string name="notifications_open_settings">Abrir configurações</string>
     <string name="settings_notifications_section">Notificações</string>
     <string name="settings_milestones">Notificações de troféus</string>

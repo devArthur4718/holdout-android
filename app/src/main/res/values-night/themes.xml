@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Dark: the same theme on a dark parent and background. -->
-    <style name="Theme.Quitter" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.Holdout" parent="android:Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 </resources>

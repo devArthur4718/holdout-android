@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.compose.compiler)
@@ -7,20 +9,35 @@ plugins {
 }
 
 android {
-  namespace = "app.quitter"
+  namespace = "app.holdout"
   compileSdk = 37
   defaultConfig {
-    applicationId = "app.quitter"
+    applicationId = "com.devarthur.holdout"
     minSdk = 26
     targetSdk = 37
     versionCode = 1
-    versionName = "1.0"
+    versionName = "1.0.0-beta01"
+  }
+  
+  val keystoreFile = rootProject.file("keystore.properties")
+  val keystore = Properties().apply { if (keystoreFile.exists()) keystoreFile.inputStream().use(::load) }
+  if (keystoreFile.exists()) {
+    signingConfigs {
+      create("upload") {
+        storeFile = file(keystore.getProperty("storeFile"))
+        storePassword = keystore.getProperty("storePassword")
+        keyAlias = keystore.getProperty("keyAlias")
+        keyPassword = keystore.getProperty("keyPassword")
+      }
+    }
   }
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+      if (keystoreFile.exists()) signingConfig = signingConfigs.getByName("upload")
     }
   }
   compileOptions {

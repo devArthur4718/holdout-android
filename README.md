@@ -1,8 +1,8 @@
-# Quitter for Android
+# Holdout for Android
 
 **One counter. That's the whole idea.**
 
-Your last cigarette, drink or bet starts the clock. Quitter shows how long you've held out, the money you didn't spend and the time you got back, for smoking, alcohol, sugar, vaping, social media or gambling. No account, no ads, no tracking: everything stays on your phone.
+Your last cigarette, drink or bet starts the clock. Holdout shows how long you've held out, the money you didn't spend and the time you got back, for smoking, alcohol, sugar, vaping, social media or gambling. No account, no ads, no tracking: everything stays on your phone.
 
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin&logoColor=white)
@@ -15,11 +15,11 @@ Your last cigarette, drink or bet starts the clock. Quitter shows how long you'v
   <img src="docs/screenshots/trophies.png" width="200" alt="Trophies: 1 day and 1 week earned, 30 days next">
 </p>
 
-> The iOS app, built natively in SwiftUI with the same features, lives in [quitter-ios](https://github.com/devArthur4718/quitter-ios).
+> The iOS app, built natively in SwiftUI with the same features, lives in [holdout-ios](https://github.com/devArthur4718/holdout-ios).
 
 ---
 
-## Why Quitter is different
+## Why Holdout is different
 
 - **Private by design.** No account, no server, no analytics, no ads. The app doesn't even request the internet permission — it *can't* send your data anywhere. Your phone's own backup can keep a copy, so a new phone doesn't cost you your streak.
 - **A slip is not a failure.** Logging a slip restarts the counter, but your longest streak and all the money and time you've saved are kept. The wording never shames.
@@ -42,7 +42,7 @@ Two tabs — **Today** and **Trophies**. Also: several habits at once, edit or d
 
 ## Architecture
 
-MVVM with unidirectional data flow, and no DI framework — the app is small enough that `QuitterApplication` wiring a handful of objects by hand is clearer than a framework.
+MVVM with unidirectional data flow, and no DI framework — the app is small enough that `HoldoutApplication` wiring a handful of objects by hand is clearer than a framework.
 
 ```mermaid
 flowchart LR
@@ -109,7 +109,7 @@ flowchart LR
 ## Project structure
 
 ```
-app/src/main/kotlin/app/quitter/
+app/src/main/kotlin/app/holdout/
 ├── model/            Pure rules: Habit, HabitProgress, Goals, Trophies, HabitHistory, Milestones
 ├── data/             Room entities, DAO, database, HabitRepository, CSV export
 ├── notifications/    MilestoneNotifications, receivers, the shared opt-in toggle
@@ -125,7 +125,7 @@ app/src/main/kotlin/app/quitter/
 │   ├── theme/        Colours and typography
 │   └── ProgressArc.kt  The running time inside an arc that fills to the next goal; goal names
 ├── Navigation.kt     Back stack and entries
-└── QuitterApplication.kt   Wires the database, repository and notifications
+└── HoldoutApplication.kt   Wires the database, repository and notifications
 app/schemas/          Room schema history (1.json … 6.json)
 ```
 
@@ -145,15 +145,15 @@ app/schemas/          Room schema history (1.json … 6.json)
 
 ## Localization
 
-English, Brazilian Portuguese (`values-pt-rBR`) and Spanish (`values-es`), with real plural forms (`falta 1 dia` / `faltam 3 dias`). On Android 13+ the language can also be chosen for Quitter alone in system settings (`locales_config.xml`).
+English, Brazilian Portuguese (`values-pt-rBR`) and Spanish (`values-es`), with real plural forms (`falta 1 dia` / `faltam 3 dias`). On Android 13+ the language can also be chosen for Holdout alone in system settings (`locales_config.xml`).
 
 ## Build and run
 
 Requirements: Android Studio with the Android SDK 37 and JDK 17+.
 
 ```bash
-git clone git@github.com:devArthur4718/quitter-android.git
-cd quitter-android
+git clone git@github.com:devArthur4718/holdout-android.git
+cd holdout-android
 ./gradlew installDebug      # builds and installs on a connected device or emulator
 ```
 

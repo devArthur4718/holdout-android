@@ -15,3 +15,8 @@ build/
 local.properties
 # Kotlin compiler caches
 .kotlin/
+
+# Release signing (upload key and its passwords)
+keystore.properties
+*.jks
+*.keystore

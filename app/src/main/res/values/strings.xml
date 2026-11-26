@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Quitter</string>
+    <string name="app_name" translatable="false">Holdout</string>
     <!-- The language these strings are in. Dates and month names are formatted in it, so they match the text. -->
     <string name="app_language">en</string>
 
@@ -11,7 +11,7 @@
     <string name="action_cancel">Cancel</string>
 
     <string name="welcome_title">One counter.\nThat\'s the whole idea.</string>
-    <string name="welcome_body">Quitter is a simple app to track your progress as you quit certain habits. Whether it\'s cigarettes, drinking or anything else, you can lean on this tool for some support: it\'s free, there\'s no account to sign up for, and all your data stays on your phone.</string>
+    <string name="welcome_body">Holdout is a simple app to track your progress as you quit certain habits. Whether it\'s cigarettes, drinking or anything else, you can lean on this tool for some support: it\'s free, there\'s no account to sign up for, and all your data stays on your phone.</string>
     <string name="welcome_benefit_trophies">A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…</string>
     <string name="welcome_benefit_ads">Free forever, funded by ads — never on relapse screens</string>
     <string name="welcome_benefit_free">Free, with no ads and nothing to sign up for</string>
@@ -59,7 +59,7 @@
     <string name="counter_past_title">You\'re already on your way</string>
     <string name="counter_past_body">The time since you stopped already counts. Your next trophy is at %s.</string>
     <string name="counter_go_to_habits">Go to my habits</string>
-    <string name="counter_ads_note">Quitter is free and ad-supported. Ads never appear while you log a slip.</string>
+    <string name="counter_ads_note">Holdout is free and ad-supported. Ads never appear while you log a slip.</string>
 
     <string name="free_for_smoking">Smoke-free for</string>
     <string name="free_for_alcohol">Alcohol-free for</string>
@@ -178,7 +178,7 @@
     <string name="milestone_channel_detail">A notification at each milestone, never at night</string>
     <string name="counter_notify">Notify me at each trophy</string>
     <string name="counter_notify_on">You\'ll get a notification at each trophy.</string>
-    <string name="notifications_blocked">Notifications are off for Quitter.</string>
+    <string name="notifications_blocked">Notifications are off for Holdout.</string>
     <string name="notifications_open_settings">Open settings</string>
     <string name="settings_notifications_section">Notifications</string>
     <string name="settings_milestones">Trophy notifications</string>
