@@ -1,0 +1,22 @@
+Un contador. Esa es toda la idea.
+
+Tu último cigarrillo, trago o apuesta pone en marcha el reloj. Holdout muestra cuánto tiempo llevas resistiendo, el dinero que no gastaste y el tiempo que recuperaste, ya sea tabaco, alcohol, azúcar, vapeo, redes sociales, apuestas o cualquier hábito que elijas.
+
+PRIVADO DE VERDAD
+Sin cuenta, sin servidor, sin analíticas, sin anuncios. Holdout ni siquiera pide acceso a internet, así que no puede enviar tus datos a ningún sitio. Todo se queda en tu teléfono.
+
+UNA RECAÍDA NO ES UN FRACASO
+Registrar una recaída reinicia el contador, pero tu racha más larga y todo el dinero y el tiempo ahorrados se mantienen. Nada aquí busca avergonzarte.
+
+QUÉ INCLUYE
+• Hoy: un contador en vivo dentro de un arco que se llena hasta tu próxima meta, con dinero ahorrado, tiempo recuperado y tu récord personal
+• Trofeos a 1 día, 1 semana, 30, 60 y 90 días, 6 meses, 1 año y más, además de metas personales que tú defines ("45 días", "Viaje a la playa")
+• Estadísticas: dinero ahorrado y tiempo recuperado sumando todas las rachas, con un gráfico de ahorro de seis meses
+• Calendario: cada día desde que empezaste, limpio o con recaída
+• Motivos: por qué lo dejas, con tus propias palabras
+• Notificaciones de trofeos opcionales, nunca entre las 22:00 y las 08:00
+• Varios hábitos a la vez
+• Exporta todo a CSV o borra todos tus datos con un toque
+• Español, English y Português (Brasil)
+
+Holdout es una herramienta de seguimiento personal, no un servicio médico. Si necesitas ayuda para dejarlo, habla con un profesional de la salud o con un servicio de apoyo local.

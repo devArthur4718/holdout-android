@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ splash icon: the same tally marks as the launcher icon. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="288dp"
     android:height="288dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Track: the full 220 degree arc, open at the bottom -->
     <path
-        android:pathData="M31.447,71.304 A24,24 0 1 1 76.553,71.304"
-        android:strokeColor="#52FFFFFF"
-        android:strokeWidth="8.5"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000" />
-    <!-- Progress fill -->
-    <path
-        android:pathData="M31.447,71.304 A24,24 0 0 1 68.107,43.679"
+        android:pathData="M39.56,38.42 V69.58 M49.44,38.42 V69.58 M59.32,38.42 V69.58 M69.2,38.42 V69.58"
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="8.5"
+        android:strokeWidth="5.7"
         android:strokeLineCap="round"
         android:fillColor="#00000000" />
-    <!-- Knob at the progress end -->
     <path
-        android:pathData="M61.907,43.679 a6.2,6.2 0 1 0 12.4,0 a6.2,6.2 0 1 0 -12.4,0 Z"
-        android:fillColor="#FFFFFFFF" />
+        android:pathData="M32.34,61.22 L76.42,40.7"
+        android:strokeColor="#FFFFD8E4"
+        android:strokeWidth="5.7"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
 </vector>

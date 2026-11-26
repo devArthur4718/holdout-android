@@ -1,0 +1,22 @@
+Um contador. É só essa a ideia.
+
+Seu último cigarro, bebida ou aposta inicia o relógio. O Holdout mostra há quanto tempo você resiste, o dinheiro que deixou de gastar e o tempo que ganhou de volta, seja cigarro, álcool, açúcar, vape, redes sociais, apostas ou qualquer hábito que você escolher.
+
+PRIVADO DE VERDADE
+Sem conta, sem servidor, sem análises, sem anúncios. O Holdout nem pede acesso à internet, então não tem como enviar seus dados para lugar nenhum. Tudo fica no seu celular.
+
+UMA RECAÍDA NÃO É UM FRACASSO
+Registrar uma recaída reinicia o contador, mas seu maior período e todo o dinheiro e tempo economizados continuam lá. Nada aqui é para envergonhar você.
+
+O QUE TEM NO APP
+• Hoje: um contador ao vivo dentro de um arco que enche até a próxima meta, com dinheiro guardado, tempo de volta e seu recorde pessoal
+• Troféus em 1 dia, 1 semana, 30, 60 e 90 dias, 6 meses, 1 ano e além, mais metas pessoais criadas por você ("45 dias", "Viagem à praia")
+• Estatísticas: dinheiro guardado e tempo de volta somando todos os períodos, com um gráfico de economia de seis meses
+• Calendário: cada dia desde o início, limpo ou com recaída
+• Motivos: por que você está largando, com suas próprias palavras
+• Notificações de troféus opcionais, nunca entre 22h e 8h
+• Vários hábitos ao mesmo tempo
+• Exporte tudo em CSV ou apague todos os seus dados com um toque
+• Português (Brasil), English e Español
+
+O Holdout é uma ferramenta de acompanhamento pessoal, não um serviço médico. Se você precisa de ajuda para parar, procure um profissional de saúde ou um serviço de apoio da sua região.
