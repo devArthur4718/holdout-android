@@ -2,7 +2,7 @@ package app.holdout.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Colors taken from the Holdout design (QuitterPhone.dc.html, LIGHT / DARK palettes).
+// Colors taken from the Holdout design (LIGHT / DARK palettes).
 
 // Light
 val BackgroundLight = Color(0xFFFEF7FF) // --bg
